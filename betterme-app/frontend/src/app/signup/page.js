@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -8,6 +8,16 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [onboardingData, setOnboardingData] = useState(null);
+
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('userData');
+
+    if (storedData) {
+      setOnboardingData(JSON.parse(storedData)); 
+    }
+  }, []);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -17,7 +27,7 @@ export default function SignUp() {
       const response = await fetch('http://localhost:4000/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, ...onboardingData }),
       });
 
       const data = await response.json();
