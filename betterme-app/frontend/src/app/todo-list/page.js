@@ -67,7 +67,7 @@ function App() {
         onChange={e => setNewToDoDate(e.target.value)}
       />
       </div>
-      <button onClick={addToDo}>Add To-Do</button>
+      <button className="add-todo-button" onClick={addToDo}>Add To-Do</button>
       
 
       <div className="todo-container">
@@ -78,10 +78,10 @@ function App() {
             <span>{todo.date || "N/A"}</span>
             </div>
             <div className="todo-actions">
-              <button onClick={() => completeOrNotTodo(index)}>
+              <button className="add-todo-button" onClick={() => completeOrNotTodo(index)}>
                 {todo.isCompleted ? "Incomplete" : "Complete"}
               </button>
-              <button className="edit" onClick={() => editTodo(index)}>
+              <button className="add-todo-button-edit" onClick={() => editTodo(index)}>
                 Edit
               </button>
               <button className="delete" onClick={() => deleteTodo(index)}>

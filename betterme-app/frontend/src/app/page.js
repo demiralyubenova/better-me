@@ -1,13 +1,32 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [friends, setFriends] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  
+
+  useEffect(() => {
+    const shouldReload = localStorage.getItem("shouldReload");
+  
+    if (shouldReload === "true") {
+      localStorage.removeItem("shouldReload");
+      window.location.reload();
+    }
+  
+    const setReloadFlag = () => localStorage.setItem("shouldReload", "true");
+  
+    window.addEventListener("beforeunload", setReloadFlag);
+  
+    return () => {
+      window.removeEventListener("beforeunload", setReloadFlag);
+    };
+  }, []);
+  
 
   const handleSearch = (e) => {
     setEmail(e.target.value);
