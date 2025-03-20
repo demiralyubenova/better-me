@@ -33,6 +33,7 @@ export default function SignUp() {
       const data = await response.json();
 
       if (!response.ok) throw new Error(data.error);
+      localStorage.setItem("token", data.data.session.access_token)
 
       console.log('Успешна регистрация:', data);
       router.push('/dashboard'); // Redirect on success
