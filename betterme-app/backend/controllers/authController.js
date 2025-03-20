@@ -1,7 +1,7 @@
 const supabase = require('../utils/supabaseClient');
 
 exports.signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, age, location, income, expenses } = req.body;
 
   const trimmedEmail = email.trim();
   const trimmedPassword = password.trim();
@@ -18,6 +18,7 @@ exports.signup = async (req, res) => {
   if (error) return res.status(400).json({ error: error.message });
 
   const userId = data.user?.id;
+  console.log(userId)
 
   const { data: basic_info_data, error: profileError } = await supabase
   .from('user_basic_info')
