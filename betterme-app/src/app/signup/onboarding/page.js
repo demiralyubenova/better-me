@@ -31,6 +31,7 @@ export default function OnboardingForm() {
         <input
           type="number"
           name="age"
+          min="0"
           placeholder="Години"
           className="w-full p-3 text-gray-900 border rounded-md mb-4"
           onChange={handleChange}
@@ -47,6 +48,7 @@ export default function OnboardingForm() {
         <input
           type="number"
           name="income"
+          min="0"
           placeholder="Средномесечни приходи (лв.)"
           className="w-full p-3 text-gray-900 border rounded-md mb-4"
           onChange={handleChange}
@@ -55,6 +57,7 @@ export default function OnboardingForm() {
         <input
           type="number"
           name="expenses"
+          min="0"
           placeholder="Средномесечни разходи (лв.)"
           className="w-full p-3 text-gray-900  border rounded-md mb-4"
           onChange={handleChange}
@@ -62,7 +65,7 @@ export default function OnboardingForm() {
         />
         <button
           type="submit"
-          className="w-full bg-green-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold"
+          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-md font-semibold"
         >
           Продължи
         </button>
