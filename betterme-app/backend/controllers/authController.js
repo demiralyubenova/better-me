@@ -16,6 +16,15 @@ exports.signup = async (req, res) => {
   const { data, error } = await supabase.auth.signUp({ email: trimmedEmail, password: trimmedPassword });
 
   if (error) return res.status(400).json({ error: error.message });
+
+  const userId = data.user?.id;
+
+  const { data: basic_info_data, error: profileError } = await supabase
+  .from('user_basic_info')
+  .insert([{ user_id: userId, age, location, income, expenses }]);
+
+  if (profileError) return res.status(400).json({ error: profileError.message });
+
   res.json({ data });
 };
 
