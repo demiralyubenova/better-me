@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -25,7 +27,10 @@ export default function Login() {
     } catch (err) {
       setError(err.message);
     }
+    router.push('/dashboard');
   };
+
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
