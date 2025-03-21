@@ -4,15 +4,12 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SER
 
 exports.getFriends = async (req, res) => {
     const { userId } = req.body;
-    console.log(userId)
     const { data: friends, error } = await supabase.from('friends').select('*').eq('user_id', userId);
-    console.log(error)
 
     if (error || !friends.length) return res.status(404).json({ message: "No friends found" });
 
     // Намери данните на всички приятели
     const friendIds = friends.map(f => f.friend_id);
-    console.log(friendIds)
     // Get user data from auth.users table
     const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
     if (authError) return res.status(500).json({ message: "Error fetching auth users" });

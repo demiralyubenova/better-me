@@ -49,9 +49,7 @@ exports.finishquiz = async (req, res) => {
 exports.finishlesson = async (req, res) => {
     {
         const { userId, lessonId } = req.body;
-        console.log('userId:', userId);
-        console.log('lessonId:', lessonId);
-        
+
         try {
           const { data: existingCompletion, error: checkError } = await supabase
             .from('completed_lessons')

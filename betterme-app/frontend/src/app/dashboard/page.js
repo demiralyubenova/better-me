@@ -4,7 +4,6 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis
 import { jwtDecode } from "jwt-decode";
 import Navbar from "../components/navbar";
 
-
 export default function Dashboard() {
   const [userData, setUserData] = useState({
     income: 0,
@@ -19,57 +18,169 @@ export default function Dashboard() {
     amount: "",
   });
 
-  // New state for lesson progress
-  const [lessonProgress, setLessonProgress] = useState({
-    lessonsCompleted: 0,
-    totalLessons: 10, // You can change this number to reflect total lessons
-  });
+  const [userId, setUserId] = useState(null);
+  const [completedLessons, setCompletedLessons] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [friends, setFriends] = useState([]);
+  const [rankingData, setRankingData] = useState([]);
 
   useEffect(() => {
+    // Get user info and fetch completed lessons
     const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("No token found");
-      return;
-    }
-
-    try {
-      const decodedToken = jwtDecode(token);
-      const userId = decodedToken.sub;
-
-      fetch("http://localhost:4000/api/dashboard/getDashboard", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_id: userId }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.data.length > 0) {
-            setUserData({
-              income: data.data[0].income,
-              expenses: data.data[0].expenses,
-            });
-          }
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const currentUserId = decodedToken.sub;
+        setUserId(currentUserId);
+        
+        // Fetch all required data in parallel
+        Promise.all([
+          fetchCompletedLessons(currentUserId),
+          fetchUserFinancialData(currentUserId),
+          fetchTransactions(currentUserId),
+          fetchFriendsData(currentUserId)
+        ])
+        .then(() => {
+          setIsLoading(false);
         })
-        .catch(error => console.error("Error fetching user data:", error));
-
-      fetch("http://localhost:4000/api/dashboard/getTransactions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_id: userId }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          setTransactions(data.data);
-        })
-        .catch(error => console.error("Error fetching transactions:", error));
-    } catch (error) {
-      console.error("Invalid token", error);
+        .catch(error => {
+          console.error("Error fetching dashboard data:", error);
+          setIsLoading(false);
+        });
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        setIsLoading(false);
+      }
+    } else {
+      setIsLoading(false);
     }
   }, []);
+
+  const fetchCompletedLessons = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/quiz/get-lessons?userId=${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      
+      const data = await response.json();
+      if (data.data) {
+        const completedLessonIds = data.data.map(lesson => lesson.lesson_id);
+        setCompletedLessons(completedLessonIds);
+        setLessonProgress(prevProgress => ({
+          ...prevProgress,
+          lessonsCompleted: completedLessonIds.length,
+        }));
+      }
+    } catch (error) {
+      console.error("Error fetching completed lessons:", error);
+    }
+  };
+
+  const fetchUserFinancialData = async (userId) => {
+    try {
+      const response = await fetch("http://localhost:4000/api/dashboard/getDashboard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_id: userId }),
+      });
+      
+      const data = await response.json();
+      if (data.data.length > 0) {
+        setUserData({
+          income: data.data[0].income,
+          expenses: data.data[0].expenses,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const fetchTransactions = async (userId) => {
+    try {
+      const response = await fetch("http://localhost:4000/api/dashboard/getTransactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_id: userId }),
+      });
+      
+      const data = await response.json();
+      setTransactions(data.data);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+
+  // New function to fetch friends data
+  const fetchFriendsData = async (userId) => {
+    try {
+      const response = await fetch("http://localhost:4000/api/dashboard/getFriendsAnalytics", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_id: userId }),
+      });
+      
+      const data = await response.json();
+      if (data.friends) {
+        setFriends(data.friends);
+        
+        updateRankingData(data.friends, userId);
+      }
+    } catch (error) {
+      console.error("Error fetching friends data:", error);
+    }
+  };
+
+  // New function to update ranking data
+  const updateRankingData = (friendsData, currentUserId) => {
+    // Calculate current user's savings ratio
+    const userIncome = userData.income;
+    const userExpenses = userData.expenses;
+    const userSavingsRatio = userIncome > 0 ? ((userIncome - userExpenses) / userIncome * 100) : 0;
+    
+    // Create the ranking array with the current user and friends
+    const rankings = [
+      {
+        name: "You",
+        score: parseFloat(userSavingsRatio.toFixed(1)),
+        color: "#4CAF50",
+        isCurrentUser: true
+      }
+    ];
+    
+    // Add friends to the rankings
+    friendsData.forEach((friend, index) => {
+      const friendIncome = friend.income || 0;
+      const friendExpenses = friend.expenses || 0;
+      const savingsRatio = friendIncome > 0 ? ((friendIncome - friendExpenses) / friendIncome * 100) : 0;
+      
+      rankings.push({
+        name: friend.username || `Friend ${index + 1}`,
+        score: parseFloat(savingsRatio.toFixed(1)),
+        color: COLORS[(index + 1) % COLORS.length],
+        isCurrentUser: false
+      });
+    });
+    
+    // Sort rankings by score (highest to lowest)
+    const sortedRankings = rankings.sort((a, b) => b.score - a.score);
+    setRankingData(sortedRankings);
+  };
+  
+  // New state for lesson progress
+  const [lessonProgress, setLessonProgress] = useState({
+    lessonsCompleted: completedLessons.length,
+    totalLessons: 29, // You can change this number to reflect total lessons
+  });
 
   useEffect(() => {
     if (!transactions.length) return;
@@ -91,6 +202,13 @@ export default function Dashboard() {
       };
     });
   }, [transactions]);
+
+  // Update ranking when user data changes
+  useEffect(() => {
+    if (friends.length > 0 && userId) {
+      updateRankingData(friends, userId);
+    }
+  }, [userData, friends, userId]);
 
   const balance = userData.income - userData.expenses;
 
@@ -156,9 +274,14 @@ export default function Dashboard() {
       if (response.ok) {
         setTransactions(prev => [
           ...prev,
-          { category: newTransaction.category, type: newTransaction.type, amount },
+          { category: newTransaction.category, type: newTransaction.type, amount, created_at: new Date() },
         ]);
         setNewTransaction({ category: "", type: "Income", amount: "" });
+        
+        // Update user data after adding transaction
+        const newIncome = newTransaction.type === "Income" ? userData.income + amount : userData.income;
+        const newExpenses = newTransaction.type === "Expense" ? userData.expenses + amount : userData.expenses;
+        setUserData({ income: newIncome, expenses: newExpenses });
       } else {
         console.error("Error adding transaction:", data.error);
       }
@@ -166,6 +289,7 @@ export default function Dashboard() {
       console.error("Error adding transaction:", error);
     }
   };
+
 
   // Lesson progress chart data
   const lessonChartData = [
@@ -179,168 +303,219 @@ export default function Dashboard() {
     },
   ];
 
-  const rankingData = [
-    {
-      name: "You",
-      score: ((userData.income - userData.expenses) / userData.income * 100).toFixed(1),
-      color: "#4CAF50"
-    },
-    { name: "Shishi", score: 75.5, color: "#2196F3" },
-    { name: "Maria", score: 68.2, color: "#9C27B0" },
-    { name: "Joji sosa", score: 62.8, color: "#FF9800" },
-    { name: "DA", score: 58.4, color: "#E91E63" }
-  ].sort((a, b) => b.score - a.score);
+  // Find user's ranking position
+  const getUserRankMessage = () => {
+    const userRankIndex = rankingData.findIndex(item => item.isCurrentUser);
+    
+    if (userRankIndex === 0) {
+      return "🏆 Great job! You're leading the rankings!";
+    } else if (userRankIndex === 1) {
+      return "🥈 Almost there! You're in 2nd place!";
+    } else if (userRankIndex === 2) {
+      return "🥉 Not bad! You're in 3rd place!";
+    } else {
+      return `💪 Keep going! You're ${userRankIndex + 1}${getRankSuffix(userRankIndex + 1)} in the rankings`;
+    }
+  };
+  
+  const getRankSuffix = (rank) => {
+    if (rank % 10 === 1 && rank !== 11) return "st";
+    if (rank % 10 === 2 && rank !== 12) return "nd";
+    if (rank % 10 === 3 && rank !== 13) return "rd";
+    return "th";
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <Navbar />
-      <h1 className="text-3xl font-bold text-black text-center mb-6">Финансово Табло</h1>
+      <div className="pt-16">
+        <h1 className="text-3xl font-bold text-black text-center mb-6">Financial Dashboard</h1>
 
-      {/* Financial Summary Cards */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className={`p-4 text-white rounded-lg shadow ${balance >= 0 ? "bg-green-500" : "bg-red-500"}`}>
-          <h2 className="text-lg font-semibold">Баланс</h2>
-          <p className="text-2xl font-bold">${balance}</p>
-        </div>
-        <div className="p-4 bg-green-100 text-green-700 rounded-lg shadow">
-          <h2 className="text-lg font-semibold">Приходи</h2>
-          <p className="text-2xl font-bold">${userData.income}</p>
-        </div>
-        <div className="p-4 bg-red-100 text-red-700 rounded-lg shadow">
-          <h2 className="text-lg font-semibold">Разходи</h2>
-          <p className="text-2xl font-bold">${userData.expenses}</p>
-        </div>
-      </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+        ) : (
+          <>
+            {/* Financial Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className={`p-4 text-white rounded-lg shadow ${balance >= 0 ? "bg-green-500" : "bg-red-500"}`}>
+                <h2 className="text-lg font-semibold">Balance</h2>
+                <p className="text-2xl font-bold">${balance.toFixed(2)}</p>
+              </div>
+              <div className="p-4 bg-green-100 text-green-700 rounded-lg shadow">
+                <h2 className="text-lg font-semibold">Income</h2>
+                <p className="text-2xl font-bold">${userData.income.toFixed(2)}</p>
+              </div>
+              <div className="p-4 bg-red-100 text-red-700 rounded-lg shadow">
+                <h2 className="text-lg font-semibold">Expenses</h2>
+                <p className="text-2xl font-bold">${userData.expenses.toFixed(2)}</p>
+              </div>
+            </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        {/* Financial Overview Chart */}
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-gray-900 font-semibold mb-3">Месечен Преглед</h2>
-          <ResponsiveContainer width="100%" height={320}>
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                outerRadius={120}
-                innerRadius={60}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value) => `$${value}`} />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              {/* Financial Overview Chart */}
+              <div className="bg-white p-4 rounded-lg shadow">
+                <h2 className="text-gray-900 font-semibold mb-3">Monthly Overview</h2>
+                <ResponsiveContainer width="100%" height={320}>
+                  <PieChart>
+                    <Pie
+                      data={chartData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      outerRadius={120}
+                      innerRadius={60}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {chartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
 
-        {/* Lesson Progress Chart */}
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-gray-900 font-semibold mb-3">Прогрес с Уроците</h2>
-          <ResponsiveContainer width="100%" height={320}>
-            <BarChart data={lessonChartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Bar dataKey="value" fill="#4CAF50" />
-              <BarTooltip />
-              <Legend />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+              {/* Lesson Progress Chart */}
+              <div className="bg-white p-4 rounded-lg shadow">
+                <h2 className="text-gray-900 font-semibold mb-3">Learning Progress</h2>
+                <ResponsiveContainer width="100%" height={320}>
+                  <BarChart data={lessonChartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Bar dataKey="value" fill="#4CAF50" />
+                    <BarTooltip />
+                    <Legend />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
 
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <h2 className="text-gray-900 font-semibold mb-3">Financial Management Ranking</h2>
-        <div className="text-sm text-gray-600 mb-4">
-          Score is calculated based on savings ratio (% of income saved)
-        </div>
-        <ResponsiveContainer width="100%" height={320}>
-          <BarChart
-            data={rankingData}
-            layout="vertical"
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" domain={[0, 100]} unit="%" />
-            <YAxis dataKey="name" type="category" />
-            <Tooltip 
-              formatter={(value) => `${value}%`}
-              labelStyle={{ color: 'black' }}
-            />
-            <Bar 
-              dataKey="score" 
-              radius={[0, 4, 4, 0]}
-            >
-              {rankingData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-        <div className="mt-4 text-sm text-gray-600">
-          {rankingData[0].name === "You" ? 
-            "🏆 Great job! You're leading the rankings!" :
-            `💪 Keep going! You're ${rankingData.findIndex(item => item.name === "You") + 1}th in rankings`
-          }
-        </div>
-      </div>
+            {/* Financial Management Ranking */}
+            <div className="bg-white p-4 rounded-lg shadow mb-6">
+              <h2 className="text-gray-900 font-semibold mb-3">Financial Management Ranking</h2>
+              <div className="text-sm text-gray-600 mb-4">
+                Score is calculated based on savings ratio (% of income saved)
+              </div>
+              
+              {rankingData.length > 0 ? (
+                <>
+                  <ResponsiveContainer width="100%" height={320}>
+                    <BarChart
+                      data={rankingData}
+                      layout="vertical"
+                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis type="number" domain={[0, 100]} unit="%" />
+                      <YAxis dataKey="name" type="category" />
+                      <Tooltip 
+                        formatter={(value) => `${value}%`}
+                        labelStyle={{ color: 'black' }}
+                      />
+                      <Bar 
+                        dataKey="score" 
+                        radius={[0, 4, 4, 0]}
+                      >
+                        {rankingData.map((entry, index) => (
+                          <Cell 
+                            key={`cell-${index}`} 
+                            fill={entry.color} 
+                            stroke={entry.isCurrentUser ? "#000" : "none"}
+                            strokeWidth={entry.isCurrentUser ? 2 : 0}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                  <div className="mt-4 text-sm text-gray-600">
+                    {getUserRankMessage()}
+                  </div>
+                </>
+              ) : (
+                <div className="flex justify-center items-center h-64 text-gray-500">
+                  No ranking data available. Add friends to see how you compare!
+                </div>
+              )}
+            </div>
 
-      {/* Add Transaction Form */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <h2 className="text-black font-semibold mb-3">Добави Транзакция</h2>
-        <input
-          type="text"
-          placeholder="Категория"
-          value={newTransaction.category}
-          onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
-          className="border p-2 rounded mr-2 text-black"
-        />
-        <select
-          value={newTransaction.type}
-          onChange={(e) => setNewTransaction({ ...newTransaction, type: e.target.value })}
-          className="border p-2 rounded mr-2 text-black"
-        >
-          <option value="Income">Приход</option>
-          <option value="Expense">Разход</option>
-        </select>
-        <input
-          type="number"
-          placeholder="Сума"
-          value={newTransaction.amount}
-          onChange={(e) => setNewTransaction({ ...newTransaction, amount: e.target.value })}
-          className="border p-2 rounded mr-2 text-black"
-        />
-        <button onClick={addTransaction} className="bg-black text-white p-2 rounded">Добави</button>
-      </div>
+            {/* Add Transaction Form */}
+            <div className="bg-white p-4 rounded-lg shadow mb-6">
+              <h2 className="text-black font-semibold mb-3">Add Transaction</h2>
+              <div className="flex flex-col md:flex-row gap-2">
+                <input
+                  type="text"
+                  placeholder="Category"
+                  value={newTransaction.category}
+                  onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
+                  className="border p-2 rounded md:mr-2 text-black w-full md:w-auto"
+                />
+                <select
+                  value={newTransaction.type}
+                  onChange={(e) => setNewTransaction({ ...newTransaction, type: e.target.value })}
+                  className="border p-2 rounded md:mr-2 text-black w-full md:w-auto"
+                >
+                  <option value="Income">Income</option>
+                  <option value="Expense">Expense</option>
+                </select>
+                <input
+                  type="number"
+                  placeholder="Amount"
+                  value={newTransaction.amount}
+                  onChange={(e) => setNewTransaction({ ...newTransaction, amount: e.target.value })}
+                  className="border p-2 rounded md:mr-2 text-black w-full md:w-auto"
+                />
+                <button 
+                  onClick={addTransaction} 
+                  className="bg-black text-white p-2 rounded w-full md:w-auto"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
 
-      {/* Transaction History */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h2 className="text-black font-semibold mb-3">Последни Транзакции</h2>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 text-black">Категория</th>
-              <th className="p-2 text-black">Тип</th>
-              <th className="p-2 text-black">Сума</th>
-              <th className="p-2 text-black">Дата</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((tx, index) => (
-              <tr key={index} className="border-t">
-                <td className="p-2 text-black">{tx.category}</td>
-                <td className={`p-2 ${tx.type === "Income" ? "text-green-500" : "text-red-500"}`}>{tx.type}</td>
-                <td className="p-2 text-black">${tx.amount}</td>
-                <td className="p-2 text-black">{new Date(tx.created_at).toLocaleDateString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            {/* Transaction History */}
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h2 className="text-black font-semibold mb-3">Recent Transactions</h2>
+              {transactions.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-gray-200">
+                        <th className="p-2 text-black text-left">Category</th>
+                        <th className="p-2 text-black text-left">Type</th>
+                        <th className="p-2 text-black text-right">Amount</th>
+                        <th className="p-2 text-black text-right">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {transactions.map((tx, index) => (
+                        <tr key={index} className="border-t">
+                          <td className="p-2 text-black">{tx.category}</td>
+                          <td className={`p-2 ${tx.type === "Income" ? "text-green-500" : "text-red-500"}`}>{tx.type}</td>
+                          <td className={`p-2 text-right ${tx.type === "Income" ? "text-green-500" : "text-red-500"}`}>
+                            ${tx.amount.toFixed(2)}
+                          </td>
+                          <td className="p-2 text-black text-right">
+                            {new Date(tx.created_at).toLocaleDateString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  No transactions found. Start adding your income and expenses!
+                </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

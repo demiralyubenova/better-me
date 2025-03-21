@@ -14,7 +14,6 @@ const transporter = nodemailer.createTransport({
 
 // Изпращане на имейли всеки ден в 20:00
 cron.schedule('*/1 * * * *', async () => {
-  console.log('Изпращане на напомняния за транзакции...');
 
 //   const { data: users, error } = await supabase.from('users').select('email');
 
@@ -37,7 +36,6 @@ const sendEmail = async () => {
         text: "Hello! This is your daily scheduled email.",
         html: "<b>Hello! This is your daily scheduled email.</b>",
       });
-      console.log("Email sent:", info.messageId);
     } catch (error) {
       console.error("Error sending email:", error);
     }
