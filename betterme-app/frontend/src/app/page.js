@@ -47,7 +47,8 @@ export default function HomePage() {
       <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center relative">
         <div className="text-2xl font-bold text-green-600">BetterMe</div>
         <ul className="flex space-x-6 text-gray-700">
-          <li><Link href="/">Начало</Link></li>
+          <li><Link href="/">Beginning</Link></li>
+          <li><Link href="/lessons">Lessons and Quizes</Link></li>
           <li className="relative">
             <button
               className="flex space-x-6 text-gray-700"
@@ -55,6 +56,7 @@ export default function HomePage() {
             >
               Add Friend
             </button>
+            
             {isMenuOpen && (
               <div className="absolute left-1/2 transform -translate-x-1/2 mt-3 w-72 bg-white shadow-lg rounded-lg p-4 z-10 text-center">
                 <input
@@ -91,6 +93,7 @@ export default function HomePage() {
             )}
           </li>
           <li><Link href="/todo-list">To-Do List</Link></li>
+          <li><Link href="/profile">Profile 👤</Link></li>
         </ul>
       </nav>
 

@@ -1,8 +1,10 @@
 "use client";
+import Navbar from '../components/navbar';
 import './page.css';
 import { useState } from 'react';
 
 function App() {
+
   const [todos, setTodos] = useState([]);
   const [newToDoName, setNewToDoName] = useState("");
   const [newToDoDate, setNewToDoDate] = useState("");
@@ -53,6 +55,10 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar />
+      <br></br>
+      <br></br>
+      <br></br>
       <h1>To-Do List</h1>
       <div className="flex gap-2 align-center justify-center">
       <textarea
