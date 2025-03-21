@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis
 import { jwtDecode } from "jwt-decode";
 import Navbar from "../components/navbar";
 
+
 export default function Dashboard() {
   const [userData, setUserData] = useState({
     income: 0,
@@ -177,6 +178,18 @@ export default function Dashboard() {
     },
   ];
 
+  const rankingData = [
+    {
+      name: "You",
+      score: ((userData.income - userData.expenses) / userData.income * 100).toFixed(1),
+      color: "#4CAF50"
+    },
+    { name: "Shishi", score: 75.5, color: "#2196F3" },
+    { name: "Maria", score: 68.2, color: "#9C27B0" },
+    { name: "Joji sosa", score: 62.8, color: "#FF9800" },
+    { name: "DA", score: 58.4, color: "#E91E63" }
+  ].sort((a, b) => b.score - a.score);
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <Navbar />
@@ -237,6 +250,42 @@ export default function Dashboard() {
               <Legend />
             </BarChart>
           </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className="bg-white p-4 rounded-lg shadow mb-6">
+        <h2 className="text-gray-900 font-semibold mb-3">Financial Management Ranking</h2>
+        <div className="text-sm text-gray-600 mb-4">
+          Score is calculated based on savings ratio (% of income saved)
+        </div>
+        <ResponsiveContainer width="100%" height={320}>
+          <BarChart
+            data={rankingData}
+            layout="vertical"
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis type="number" domain={[0, 100]} unit="%" />
+            <YAxis dataKey="name" type="category" />
+            <Tooltip 
+              formatter={(value) => `${value}%`}
+              labelStyle={{ color: 'black' }}
+            />
+            <Bar 
+              dataKey="score" 
+              radius={[0, 4, 4, 0]}
+            >
+              {rankingData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+        <div className="mt-4 text-sm text-gray-600">
+          {rankingData[0].name === "You" ? 
+            "🏆 Great job! You're leading the rankings!" :
+            `💪 Keep going! You're ${rankingData.findIndex(item => item.name === "You") + 1}th in rankings`
+          }
         </div>
       </div>
 
