@@ -2,6 +2,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
+import lessons from '@/data/finance_lesson.json';
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,8 +47,18 @@ const Navbar = () => {
   }, [userId]);
 
   const handleSearch = (e) => {
-    setEmail(e.target.value);
-    // Add logic for searching friends here
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    // Filter lessons by title
+    if (query.length > 0) {
+      const filteredLessons = lessons.lessons.filter((lesson) =>
+        lesson.title.toLowerCase().includes(query)
+      );
+      setSearchResults(filteredLessons);
+    } else {
+      setSearchResults([]);
+    }
   };
 
   const handleAddFriend = async (email) => {
@@ -82,22 +94,25 @@ const Navbar = () => {
     <nav className="bg-white shadow-md w-full px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-10">
       <div className="text-2xl font-bold text-green-600">BetterMe</div>
       
-      {/* Search Bar */}
-      <div className="relative">
+ {/* Search Bar */}
+ <div className="relative">
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearch}
-          placeholder="Search..."
+          placeholder="Search lessons..."
           className="p-2 border border-black text-black rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-gray-600 placeholder-black"
         />
-        {searchQuery && (
+        {searchQuery && searchResults.length > 0 && (
           <div className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-lg p-2 border border-black">
-            <p className="text-gray-500">Search results appear here...</p>
+            {searchResults.map((lesson) => (
+              <Link key={lesson.id} href={`/lessons/${lesson.id}`} className="block p-2 hover:bg-gray-100">
+                {lesson.title}
+              </Link>
+            ))}
           </div>
         )}
       </div>
-
         {userId ? (
       <ul className="flex space-x-6 text-gray-700">
         <li><Link href="/">Beginning</Link></li>
