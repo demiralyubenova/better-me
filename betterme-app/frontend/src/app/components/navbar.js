@@ -79,7 +79,6 @@ const Navbar = () => {
       }
   
       const data = await response.json();
-      console.log('Friend added:', data);
     } catch (error) {
       console.error('Error adding friend:', error);
     }
@@ -131,8 +130,8 @@ const Navbar = () => {
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Search email"
-                className="w-full p-2 border border-black rounded-lg mb-3 text-center placeholder-gray"
+                placeholder="Add friend by email"
+                className="w-full p-2 border border-black rounded-lg mb-3 text-center placeholder-black"
               />
               {friends.length > 0 ? (
                 <ul className="border rounded-lg overflow-hidden">

@@ -1,4 +1,6 @@
-const supabase = require('../utils/supabaseClient');
+const { createClient } = require('@supabase/supabase-js');
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 exports.getDashboard = async (req, res) => {
     const { user_id } = req.body;
@@ -34,3 +36,71 @@ exports.addTransaction = async (req, res) => {
     if (error) return res.status(400).json({ error: error.message });
     res.json({ message: "Transaction added successfully", data });
 };
+
+
+exports.getFriendsAnalytics = async (req, res) => {
+    const { user_id } = req.body;
+    if (!user_id) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+    console.log(user_id)
+  
+    try {
+      // First, get the user's friend list
+      const { data: friendships, error: friendshipError } = await supabase
+        .from('friends')
+        .select('*')
+        .eq('user_id', user_id)
+      console.log(friendships)
+      if (friendshipError) {
+        return res.status(400).json({ error: friendshipError.message });
+      }
+      
+      // If no friends, return empty array
+      if (!friendships || friendships.length === 0) {
+        return res.json({ friends: [] });
+      }
+      
+      // Extract friend IDs from friendships
+      const friendIds = friendships.map(friendship => friendship.friend_id);
+      
+      // Get financial data for each friend
+      const { data: friendsData, error: friendsDataError } = await supabase
+        .from('user_basic_info')
+        .select('user_id, income, expenses')
+        .in('user_id', friendIds);
+      
+      if (friendsDataError) {
+        return res.status(400).json({ error: friendsDataError.message });
+      }
+      
+      // Get usernames for each friend
+      const { data: { users: usernamesData }, error: usernamesError } = await supabase.auth.admin.listUsers();
+      
+      if (usernamesError) {
+        return res.status(400).json({ error: usernamesError.message });
+      }
+
+      // Filter users to only include friends
+      const relevantUsers = usernamesData.filter(user => friendIds.includes(user.id));
+      
+      // Helper function to get username from email
+      const getDisplayName = (email) => {
+        return email ? email.split('@')[0] : 'Unknown User';
+      };
+      
+      // Combine financial data with usernames
+      const friendsWithDetails = friendsData.map(friend => {
+        const userInfo = relevantUsers.find(user => user.id === friend.user_id);
+        return {
+          ...friend,
+          username: userInfo ? getDisplayName(userInfo.email) : 'Unknown User'
+        };
+      });
+      
+      return res.json({ friends: friendsWithDetails });
+    } catch (error) {
+      console.error('Error fetching friends financial data:', error);
+      return res.status(500).json({ error: 'Server error' });
+    }
+    };
