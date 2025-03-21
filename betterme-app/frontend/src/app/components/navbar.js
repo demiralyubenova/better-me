@@ -80,6 +80,7 @@ const Navbar = () => {
   
       const data = await response.json();
       console.log('Friend added:', data);
+      setFriends([...friends, { email: email, userId: userId }]);
     } catch (error) {
       console.error('Error adding friend:', error);
     }
