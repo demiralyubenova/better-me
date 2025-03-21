@@ -82,13 +82,12 @@ export default function LessonDetailPage() {
         body: JSON.stringify({ 
           userId, 
           lessonId,
-          xp: lesson.completionXp || 10 // Default XP for lesson completion
+          xp: lesson.completionXp || 10 
         }),
       });
 
       const data = await response.json();
       if (data.success) {
-        // Add the lesson to completed lessons locally
         setCompletedLessons([...completedLessons, lessonId]);
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);

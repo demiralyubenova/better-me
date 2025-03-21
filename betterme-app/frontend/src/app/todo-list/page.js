@@ -24,7 +24,6 @@ function App() {
       setTodos([...todos, newTask]);
       setNewToDoName("");
       setNewToDoDate("");
-      console.log("Task added:", newTask);
     }
   };
 
@@ -32,14 +31,12 @@ function App() {
     const newTodo = [...todos];
     newTodo.splice(index, 1);
     setTodos(newTodo);
-    console.log("Task deleted, new list:", newTodo);
   };
 
   const editTodo = (index) => {
     setEditIndex(index);
     setEditText(todos[index].text);
     setEditDate(todos[index].date || "");
-    console.log("Editing task:", todos[index]);
   };
 
   const saveNewText = () => {
@@ -49,7 +46,6 @@ function App() {
       updatedTodos[editIndex].date = editDate;
       setTodos(updatedTodos);
       setEditIndex(null);
-      console.log("Task updated:", updatedTodos[editIndex]);
     }
   };
 

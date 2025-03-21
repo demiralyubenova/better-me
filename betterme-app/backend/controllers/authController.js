@@ -18,7 +18,6 @@ exports.signup = async (req, res) => {
   if (error) return res.status(400).json({ error: error.message });
 
   const userId = data.user?.id;
-  console.log(userId)
 
   const { data: basic_info_data, error: profileError } = await supabase
   .from('user_basic_info')

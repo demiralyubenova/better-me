@@ -35,7 +35,6 @@ export default function SignUp() {
       if (!response.ok) throw new Error(data.error);
       localStorage.setItem("token", data.data.session.access_token)
 
-      console.log('Успешна регистрация:', data);
       localStorage.removeItem('token');
       localStorage.setItem("token", data.data.session.access_token)
       router.push('/dashboard'); // Redirect on success
