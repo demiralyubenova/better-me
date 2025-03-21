@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { jwtDecode } from "jwt-decode";
+import Navbar from "../components/navbar";
 
 export default function Dashboard() {
   const [userData, setUserData] = useState({
@@ -166,7 +167,9 @@ export default function Dashboard() {
   };
 
   return (
+
     <div className="min-h-screen bg-gray-50 p-6">
+      <Navbar />
       <h1 className="text-3xl font-bold text-black text-center mb-6">Финансово Табло</h1>
 
       {/* Financial Summary Cards */}
