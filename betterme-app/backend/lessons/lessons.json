@@ -4,8 +4,70 @@
             "id": "beg-1",
             "title": "Introduction to Money",
             "difficulty": "Beginner",
-            "content": "Money is a medium of exchange that allows people to trade goods and services. It serves three main functions: as a medium of exchange, a unit of account, and a store of value. This lesson explores the basic concepts of money, its history, and its role in modern economy.",
+            "content": "Money is a medium of exchange that allows people to trade goods and services. It serves three main functions: as a medium of exchange, a unit of account, and a store of value. This lesson explores the basic concepts of money, its history, and its role in modern economy."
+        },
+        {
+            "id": "beg-2",
+            "title": "Budgeting Basics",
+            "difficulty": "Beginner",
+            "content": "Income is money that an individual or business receives in exchange for providing a good or service or through investing capital. This lesson covers different types of income including earned income, passive income, and portfolio income."
+        },
+        {
+            "id": "beg-4",
+            "title": "Saving Fundamentals",
+            "difficulty": "Beginner",
+            "content": "Saving money is setting aside income for future use rather than spending it immediately. This lesson explains the importance of saving, different saving strategies, and how to build good saving habits."
+        },
+        {
+            "id": "beg-5",
+            "title": "Bank Accounts 101",
+            "difficulty": "Beginner",
+            "content": "This lesson covers the basics of bank accounts, including checking and savings accounts, how to open an account, understanding fees, and managing your accounts effectively."
+        },
+        {
+            "id": "beg-6",
+            "title": "Basic Expenses Management",
+            "difficulty": "Beginner",
+            "content": "Understanding how to categorize and manage your expenses is fundamental to financial success. This lesson teaches you how to identify needs versus wants, track spending, and make adjustments to improve your financial situation."
+        },
+        {
+            "id": "beg-7",
+            "title": "Intro to Credit Cards",
+            "difficulty": "Beginner",
+            "content": "Credit cards are powerful financial tools that, when used responsibly, can help build credit and provide convenience. This lesson explains how credit cards work, their benefits, potential pitfalls, and best practices for responsible usage."
+        },
+        {
+            "id": "beg-8",
+            "title": "Understanding Taxes",
+            "difficulty": "Beginner",
+            "content": "Taxes are mandatory contributions to state revenue. This lesson introduces different types of taxes like income tax, sales tax, and property tax, and explains basic concepts about tax filing and withholding."
+        },
+        {
+            "id": "beg-9",
+            "title": "Financial Goal Setting",
+            "difficulty": "Beginner",
+            "content": "Setting clear financial goals is essential for creating a path to financial security. This lesson teaches the SMART method of goal setting, prioritizing financial objectives, and creating actionable plans to achieve them."
+        },
+        {
+            "id": "beg-10",
+            "title": "Shopping on a Budget",
+            "difficulty": "Beginner",
+            "content": "Learning to shop smartly while staying within your budget is a critical financial skill. This lesson covers comparison shopping, using coupons and discounts, avoiding impulse purchases, and making value-based decisions.",
             "quiz": [
+                {
+                    "question": "Which of the following is an example of passive income?",
+                    "options": [
+                        "Salary from your job",
+                        "Commission from sales",
+                        "Rental income from property",
+                        "Bonus payment"
+                    ],
+                    "correctAnswer": "Rental income from property",
+                    "xp": {
+                        "correct": 10,
+                        "partial": 3
+                    }
+                },
                 {
                     "question": "What are the three main functions of money?",
                     "options": [
@@ -47,37 +109,7 @@
                         "correct": 10,
                         "partial": 3
                     }
-                }
-            ]
-        },
-        {
-            "id": "beg-2",
-            "title": "Budgeting Basics",
-            "difficulty": "Beginner",
-            "content": "Income is money that an individual or business receives in exchange for providing a good or service or through investing capital. This lesson covers different types of income including earned income, passive income, and portfolio income.",
-            "quiz": [
-                {
-                    "question": "Which of the following is an example of passive income?",
-                    "options": [
-                        "Salary from your job",
-                        "Commission from sales",
-                        "Rental income from property",
-                        "Bonus payment"
-                    ],
-                    "correctAnswer": "Rental income from property",
-                    "xp": {
-                        "correct": 10,
-                        "partial": 3
-                    }
-                }
-            ]
-        },
-        {
-            "id": "beg-4",
-            "title": "Saving Fundamentals",
-            "difficulty": "Beginner",
-            "content": "Saving money is setting aside income for future use rather than spending it immediately. This lesson explains the importance of saving, different saving strategies, and how to build good saving habits.",
-            "quiz": [
+                },
                 {
                     "question": "What is the 50/30/20 budgeting rule?",
                     "options": [
@@ -91,15 +123,7 @@
                         "correct": 10,
                         "partial": 3
                     }
-                }
-            ]
-        },
-        {
-            "id": "beg-5",
-            "title": "Bank Accounts 101",
-            "difficulty": "Beginner",
-            "content": "This lesson covers the basics of bank accounts, including checking and savings accounts, how to open an account, understanding fees, and managing your accounts effectively.",
-            "quiz": [
+                },
                 {
                     "question": "What is the main difference between a checking and savings account?",
                     "options": [
@@ -113,15 +137,7 @@
                         "correct": 10,
                         "partial": 3
                     }
-                }
-            ]
-        },
-        {
-            "id": "beg-6",
-            "title": "Basic Expenses Management",
-            "difficulty": "Beginner",
-            "content": "Understanding how to categorize and manage your expenses is fundamental to financial success. This lesson teaches you how to identify needs versus wants, track spending, and make adjustments to improve your financial situation.",
-            "quiz": [
+                },
                 {
                     "question": "Which of the following is typically considered a 'need' rather than a 'want'?",
                     "options": [
@@ -135,15 +151,7 @@
                         "correct": 10,
                         "partial": 3
                     }
-                }
-            ]
-        },
-        {
-            "id": "beg-7",
-            "title": "Intro to Credit Cards",
-            "difficulty": "Beginner",
-            "content": "Credit cards are powerful financial tools that, when used responsibly, can help build credit and provide convenience. This lesson explains how credit cards work, their benefits, potential pitfalls, and best practices for responsible usage.",
-            "quiz": [
+                },
                 {
                     "question": "What happens if you only pay the minimum payment on your credit card each month?",
                     "options": [
@@ -157,15 +165,7 @@
                         "correct": 10,
                         "partial": 3
                     }
-                }
-            ]
-        },
-        {
-            "id": "beg-8",
-            "title": "Understanding Taxes",
-            "difficulty": "Beginner",
-            "content": "Taxes are mandatory contributions to state revenue. This lesson introduces different types of taxes like income tax, sales tax, and property tax, and explains basic concepts about tax filing and withholding.",
-            "quiz": [
+                },
                 {
                     "question": "What is the difference between gross income and net income?",
                     "options": [
@@ -179,15 +179,7 @@
                         "correct": 10,
                         "partial": 3
                     }
-                }
-            ]
-        },
-        {
-            "id": "beg-9",
-            "title": "Financial Goal Setting",
-            "difficulty": "Beginner",
-            "content": "Setting clear financial goals is essential for creating a path to financial security. This lesson teaches the SMART method of goal setting, prioritizing financial objectives, and creating actionable plans to achieve them.",
-            "quiz": [
+                },
                 {
                     "question": "What does the 'M' stand for in SMART financial goals?",
                     "options": [
@@ -201,15 +193,7 @@
                         "correct": 10,
                         "partial": 3
                     }
-                }
-            ]
-        },
-        {
-            "id": "beg-10",
-            "title": "Shopping on a Budget",
-            "difficulty": "Beginner",
-            "content": "Learning to shop smartly while staying within your budget is a critical financial skill. This lesson covers comparison shopping, using coupons and discounts, avoiding impulse purchases, and making value-based decisions.",
-            "quiz": [
+                },
                 {
                     "question": "Which strategy is most effective for avoiding impulse purchases?",
                     "options": [
@@ -230,29 +214,69 @@
             "id": "int-1",
             "title": "Building Emergency Funds",
             "difficulty": "Intermediate",
-            "content": "An emergency fund is money set aside for unexpected expenses or financial hardships. This lesson explains how to build an emergency fund, how much to save, and where to keep your emergency savings.",
-            "quiz": [
-                {
-                    "question": "How much should an adequate emergency fund typically cover?",
-                    "options": [
-                        "1 month of expenses",
-                        "3-6 months of expenses",
-                        "1 year of expenses",
-                        "5 years of expenses"
-                    ],
-                    "correctAnswer": "3-6 months of expenses",
-                    "xp": {
-                        "correct": 20,
-                        "partial": 5
-                    }
-                }
-            ]
+            "content": "An emergency fund is money set aside for unexpected expenses or financial hardships. This lesson explains how to build an emergency fund, how much to save, and where to keep your emergency savings."
+           
         },
         {
             "id": "int-2",
             "title": "Understanding Credit Scores",
             "difficulty": "Intermediate",
-            "content": "A credit score is a numerical expression based on a statistical analysis of a person's credit files, representing the creditworthiness of an individual. This lesson covers what affects your credit score, how to improve it, and why it matters.",
+            "content": "A credit score is a numerical expression based on a statistical analysis of a person's credit files, representing the creditworthiness of an individual. This lesson covers what affects your credit score, how to improve it, and why it matters."
+           
+        },
+        {
+            "id": "int-3",
+            "title": "Managing Debt",
+            "difficulty": "Intermediate",
+            "content": "Effective debt management is crucial for financial health. This lesson explores different types of debt, strategies for debt repayment like the snowball and avalanche methods, and how to avoid debt traps while building a positive credit history."
+
+        },
+        {
+            "id": "int-4",
+            "title": "Introduction to Investing",
+            "difficulty": "Intermediate",
+            "content": "Investing is putting money to work to generate returns over time. This lesson introduces investment vehicles like stocks, bonds, mutual funds, and ETFs, explaining risk-return relationships, diversification, and getting started with investing."
+
+        },
+        {
+            "id": "int-5",
+            "title": "Insurance Basics",
+            "difficulty": "Intermediate",
+            "content": "Insurance is a financial safety net that helps protect against significant losses. This lesson covers types of insurance including health, auto, home/renters, life, and disability insurance, explaining how premiums, deductibles, and coverage work."
+        },
+        {
+            "id": "int-6",
+            "title": "Buying vs. Renting",
+            "difficulty": "Intermediate",
+            "content": "The decision to buy or rent housing is complex and depends on financial, personal, and market factors. This lesson examines the pros and cons of each option, analyzing costs, benefits, and how to determine which choice makes sense for your situation."
+
+        },
+        {
+            "id": "int-7",
+            "title": "Retirement Planning Basics",
+            "difficulty": "Intermediate",
+            "content": "Planning for retirement involves long-term saving and investing to ensure financial security in your later years. This lesson covers retirement account types (401(k), IRA), contribution strategies, employer matches, and basic retirement calculations."
+
+        },
+        {
+            "id": "int-8",
+            "title": "Understanding Inflation",
+            "difficulty": "Intermediate",
+            "content": "Inflation is the rate at which prices increase over time, reducing purchasing power. This lesson explains how inflation works, how it's measured, its impact on investments and savings, and strategies to protect your finances from inflation."
+
+        },
+        {
+            "id": "int-9",
+            "title": "Tax Planning Strategies",
+            "difficulty": "Intermediate",
+            "content": "Tax planning involves organizing finances to minimize tax liability legally. This lesson explores tax-advantaged accounts, deductions, credits, timing of income and expenses, and strategies for efficient tax management."
+           
+        },
+        {
+            "id": "int-10",
+            "title": "Financial Protection",
+            "difficulty": "Intermediate",
+            "content": "Financial protection involves safeguarding your assets and identity from various risks. This lesson covers identity theft prevention, fraud awareness, account security best practices, and protecting yourself from common financial scams.",
             "quiz": [
                 {
                     "question": "Which factor typically has the largest impact on your credit score?",
@@ -267,15 +291,21 @@
                         "correct": 20,
                         "partial": 5
                     }
-                }
-            ]
-        },
-        {
-            "id": "int-3",
-            "title": "Managing Debt",
-            "difficulty": "Intermediate",
-            "content": "Effective debt management is crucial for financial health. This lesson explores different types of debt, strategies for debt repayment like the snowball and avalanche methods, and how to avoid debt traps while building a positive credit history.",
-            "quiz": [
+                },
+                {
+                    "question": "How much should an adequate emergency fund typically cover?",
+                    "options": [
+                        "1 month of expenses",
+                        "3-6 months of expenses",
+                        "1 year of expenses",
+                        "5 years of expenses"
+                    ],
+                    "correctAnswer": "3-6 months of expenses",
+                    "xp": {
+                        "correct": 20,
+                        "partial": 5
+                    }
+                },
                 {
                     "question": "What is the 'debt avalanche' method?",
                     "options": [
@@ -289,15 +319,7 @@
                         "correct": 20,
                         "partial": 5
                     }
-                }
-            ]
-        },
-        {
-            "id": "int-4",
-            "title": "Introduction to Investing",
-            "difficulty": "Intermediate",
-            "content": "Investing is putting money to work to generate returns over time. This lesson introduces investment vehicles like stocks, bonds, mutual funds, and ETFs, explaining risk-return relationships, diversification, and getting started with investing.",
-            "quiz": [
+                },
                 {
                     "question": "What is the relationship between risk and potential return in investing?",
                     "options": [
@@ -311,15 +333,7 @@
                         "correct": 20,
                         "partial": 5
                     }
-                }
-            ]
-        },
-        {
-            "id": "int-5",
-            "title": "Insurance Basics",
-            "difficulty": "Intermediate",
-            "content": "Insurance is a financial safety net that helps protect against significant losses. This lesson covers types of insurance including health, auto, home/renters, life, and disability insurance, explaining how premiums, deductibles, and coverage work.",
-            "quiz": [
+                },
                 {
                     "question": "What is a deductible in insurance?",
                     "options": [
@@ -333,15 +347,7 @@
                         "correct": 20,
                         "partial": 5
                     }
-                }
-            ]
-        },
-        {
-            "id": "int-6",
-            "title": "Buying vs. Renting",
-            "difficulty": "Intermediate",
-            "content": "The decision to buy or rent housing is complex and depends on financial, personal, and market factors. This lesson examines the pros and cons of each option, analyzing costs, benefits, and how to determine which choice makes sense for your situation.",
-            "quiz": [
+                },
                 {
                     "question": "Which of the following is NOT typically a financial advantage of homeownership?",
                     "options": [
@@ -355,15 +361,7 @@
                         "correct": 20,
                         "partial": 5
                     }
-                }
-            ]
-        },
-        {
-            "id": "int-7",
-            "title": "Retirement Planning Basics",
-            "difficulty": "Intermediate",
-            "content": "Planning for retirement involves long-term saving and investing to ensure financial security in your later years. This lesson covers retirement account types (401(k), IRA), contribution strategies, employer matches, and basic retirement calculations.",
-            "quiz": [
+                },
                 {
                     "question": "What is the main advantage of a Roth IRA compared to a traditional IRA?",
                     "options": [
@@ -377,15 +375,7 @@
                         "correct": 20,
                         "partial": 5
                     }
-                }
-            ]
-        },
-        {
-            "id": "int-8",
-            "title": "Understanding Inflation",
-            "difficulty": "Intermediate",
-            "content": "Inflation is the rate at which prices increase over time, reducing purchasing power. This lesson explains how inflation works, how it's measured, its impact on investments and savings, and strategies to protect your finances from inflation.",
-            "quiz": [
+                },
                 {
                     "question": "If inflation is 3% annually, what happens to the purchasing power of money kept in a non-interest-bearing account for a year?",
                     "options": [
@@ -399,15 +389,7 @@
                         "correct": 20,
                         "partial": 5
                     }
-                }
-            ]
-        },
-        {
-            "id": "int-9",
-            "title": "Tax Planning Strategies",
-            "difficulty": "Intermediate",
-            "content": "Tax planning involves organizing finances to minimize tax liability legally. This lesson explores tax-advantaged accounts, deductions, credits, timing of income and expenses, and strategies for efficient tax management.",
-            "quiz": [
+                },
                 {
                     "question": "What is the difference between a tax deduction and a tax credit?",
                     "options": [
@@ -421,15 +403,7 @@
                         "correct": 20,
                         "partial": 5
                     }
-                }
-            ]
-        },
-        {
-            "id": "int-10",
-            "title": "Financial Protection",
-            "difficulty": "Intermediate",
-            "content": "Financial protection involves safeguarding your assets and identity from various risks. This lesson covers identity theft prevention, fraud awareness, account security best practices, and protecting yourself from common financial scams.",
-            "quiz": [
+                },
                 {
                     "question": "Which practice best helps prevent identity theft?",
                     "options": [
@@ -444,13 +418,77 @@
                         "partial": 5
                     }
                 }
+
             ]
         },
         {
             "id": "adv-1",
             "title": "Portfolio Diversification Strategies",
             "difficulty": "Advanced",
-            "content": "Diversification is a risk management strategy that mixes a variety of investments within a portfolio. This lesson explores advanced diversification strategies across different asset classes, sectors, geographies, and time horizons.",
+            "content": "Diversification is a risk management strategy that mixes a variety of investments within a portfolio. This lesson explores advanced diversification strategies across different asset classes, sectors, geographies, and time horizons."
+           
+        },
+        {
+            "id": "adv-2",
+            "title": "Advanced Investment Analysis",
+            "difficulty": "Advanced",
+            "content": "This lesson covers sophisticated methods of analyzing investments, including fundamental analysis, technical analysis, quantitative methods, and behavioral finance considerations."
+           
+        },
+        {
+            "id": "adv-3",
+            "title": "Estate Planning",
+            "difficulty": "Advanced",
+            "content": "Estate planning involves arranging for the management and disposal of assets during life and after death. This lesson covers wills, trusts, power of attorney, healthcare directives, estate taxes, and strategies for efficient wealth transfer."
+      
+        },
+        {
+            "id": "adv-4",
+            "title": "Tax-Efficient Investing",
+            "difficulty": "Advanced",
+            "content": "Tax-efficient investing focuses on minimizing tax liability while maximizing returns. This lesson explores asset location strategies, tax-loss harvesting, tax-efficient fund selection, capital gains management, and other advanced tax optimization techniques."
+
+        },
+        {
+            "id": "adv-5",
+            "title": "Alternative Investments",
+            "difficulty": "Advanced",
+            "content": "Alternative investments go beyond traditional stocks, bonds, and cash. This lesson examines private equity, hedge funds, real estate, commodities, collectibles, and other non-conventional investments, analyzing their risks, returns, and portfolio roles."
+         
+        },
+        {
+            "id": "adv-6",
+            "title": "International Finance",
+            "difficulty": "Advanced",
+            "content": "International finance involves financial activities across national borders. This lesson covers global markets, currency exchange risks, international diversification, emerging markets, geopolitical considerations, and global investment strategies."
+        
+        },
+        {
+            "id": "adv-7",
+            "title": "Behavioral Finance",
+            "difficulty": "Advanced",
+            "content": "Behavioral finance examines how psychology influences financial decisions. This lesson explores cognitive biases, emotional factors in investing, prospect theory, market anomalies, and strategies to overcome psychological pitfalls in financial decision-making."
+       
+        },
+        {
+            "id": "adv-8",
+            "title": "Retirement Income Strategies",
+            "difficulty": "Advanced",
+            "content": "Creating sustainable income during retirement is critical for financial security. This lesson covers withdrawal strategies, Social Security optimization, pension options, annuities, sequence risk management, and creating an integrated retirement income plan."
+          
+        },
+        {
+            "id": "adv-9",
+            "title": "Business Valuation",
+            "difficulty": "Advanced",
+            "content": "Business valuation determines the economic value of a business or company. This lesson explores valuation methods including discounted cash flow, market multiples, asset-based approaches, and factors affecting private business values."
+        
+        },
+        {
+            "id": "adv-10",
+            "title": "Advanced Tax Strategies",
+            "difficulty": "Advanced",
+            "content": "This lesson covers sophisticated tax planning approaches for high-net-worth individuals and complex situations. Topics include charitable giving strategies, family limited partnerships, deferred compensation, trust structures, and cross-border tax considerations.",
             "quiz": [
                 {
                     "question": "What is the main purpose of portfolio diversification?",
@@ -465,15 +503,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-2",
-            "title": "Advanced Investment Analysis",
-            "difficulty": "Advanced",
-            "content": "This lesson covers sophisticated methods of analyzing investments, including fundamental analysis, technical analysis, quantitative methods, and behavioral finance considerations.",
-            "quiz": [
+                },
                 {
                     "question": "Which of the following is NOT typically part of fundamental analysis?",
                     "options": [
@@ -487,15 +517,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-3",
-            "title": "Estate Planning",
-            "difficulty": "Advanced",
-            "content": "Estate planning involves arranging for the management and disposal of assets during life and after death. This lesson covers wills, trusts, power of attorney, healthcare directives, estate taxes, and strategies for efficient wealth transfer.",
-            "quiz": [
+                },
                 {
                     "question": "Which of the following is NOT a typical benefit of establishing a trust?",
                     "options": [
@@ -509,15 +531,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-4",
-            "title": "Tax-Efficient Investing",
-            "difficulty": "Advanced",
-            "content": "Tax-efficient investing focuses on minimizing tax liability while maximizing returns. This lesson explores asset location strategies, tax-loss harvesting, tax-efficient fund selection, capital gains management, and other advanced tax optimization techniques.",
-            "quiz": [
+                },
                 {
                     "question": "What is tax-loss harvesting?",
                     "options": [
@@ -531,15 +545,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-5",
-            "title": "Alternative Investments",
-            "difficulty": "Advanced",
-            "content": "Alternative investments go beyond traditional stocks, bonds, and cash. This lesson examines private equity, hedge funds, real estate, commodities, collectibles, and other non-conventional investments, analyzing their risks, returns, and portfolio roles.",
-            "quiz": [
+                },
                 {
                     "question": "Which characteristic is typically associated with alternative investments?",
                     "options": [
@@ -553,15 +559,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-6",
-            "title": "International Finance",
-            "difficulty": "Advanced",
-            "content": "International finance involves financial activities across national borders. This lesson covers global markets, currency exchange risks, international diversification, emerging markets, geopolitical considerations, and global investment strategies.",
-            "quiz": [
+                },
                 {
                     "question": "What is currency risk in international investing?",
                     "options": [
@@ -575,15 +573,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-7",
-            "title": "Behavioral Finance",
-            "difficulty": "Advanced",
-            "content": "Behavioral finance examines how psychology influences financial decisions. This lesson explores cognitive biases, emotional factors in investing, prospect theory, market anomalies, and strategies to overcome psychological pitfalls in financial decision-making.",
-            "quiz": [
+                },
                 {
                     "question": "What is 'loss aversion' in behavioral finance?",
                     "options": [
@@ -597,15 +587,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-8",
-            "title": "Retirement Income Strategies",
-            "difficulty": "Advanced",
-            "content": "Creating sustainable income during retirement is critical for financial security. This lesson covers withdrawal strategies, Social Security optimization, pension options, annuities, sequence risk management, and creating an integrated retirement income plan.",
-            "quiz": [
+                },
                 {
                     "question": "What is 'sequence of returns risk' in retirement planning?",
                     "options": [
@@ -619,15 +601,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-9",
-            "title": "Business Valuation",
-            "difficulty": "Advanced",
-            "content": "Business valuation determines the economic value of a business or company. This lesson explores valuation methods including discounted cash flow, market multiples, asset-based approaches, and factors affecting private business values.",
-            "quiz": [
+                },
                 {
                     "question": "What valuation method uses projections of future cash flows adjusted to present value?",
                     "options": [
@@ -641,15 +615,7 @@
                         "correct": 30,
                         "partial": 8
                     }
-                }
-            ]
-        },
-        {
-            "id": "adv-10",
-            "title": "Advanced Tax Strategies",
-            "difficulty": "Advanced",
-            "content": "This lesson covers sophisticated tax planning approaches for high-net-worth individuals and complex situations. Topics include charitable giving strategies, family limited partnerships, deferred compensation, trust structures, and cross-border tax considerations.",
-            "quiz": [
+                },
                 {
                     "question": "What is a donor-advised fund?",
                     "options": [

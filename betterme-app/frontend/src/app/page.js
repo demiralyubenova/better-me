@@ -38,6 +38,11 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
       <Navbar />
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
 
       {/* Animated Hero Section */}
       <div className="max-w-5xl mx-auto px-6 py-24 text-center">
