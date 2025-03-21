@@ -92,7 +92,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white shadow-md w-full px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-10">
-      <div className="text-2xl font-bold text-green-600">BetterMe</div>
+      <div className="text-2xl font-bold text-green-600"><Link href="/">BetterMe</Link></div>
       
  {/* Search Bar */}
  <div className="relative">
@@ -115,7 +115,6 @@ const Navbar = () => {
       </div>
         {userId ? (
       <ul className="flex space-x-6 text-gray-700">
-        <li><Link href="/">Beginning</Link></li>
         <li><Link href="/dashboard">Dashboard</Link></li>
         <li><Link href="/lessons">Lessons and Quizzes</Link></li>
         <li className="relative">
