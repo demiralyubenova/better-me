@@ -21,6 +21,7 @@ export default function Login() {
       });  
 
       const data = await response.json();
+      localStorage.removeItem('token');
       localStorage.setItem("token", data.data.session.access_token)
 
       if (!response.ok) throw new Error(data.error);
