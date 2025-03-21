@@ -1,21 +1,72 @@
 import { useState } from "react";
 import Link from "next/link";
+import { jwtDecode } from "jwt-decode";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [friends, setFriends] = useState([]);
+  const token = localStorage.getItem('token');
+  const userId = jwtDecode(token).sub;
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/friends/get-friends', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId }), // Sending the friend's email as part of the request
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setFriends(data);
+        }
+      } catch (error) {
+        console.error('Error fetching friends:', error);
+      }
+    };
+
+    fetchFriends();
+  }, [userId]);
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    // Add logic to filter results based on the search query
+    setEmail(e.target.value);
+    // Add logic for searching friends here
   };
 
-  const handleAddFriend = (friendEmail) => {
-    console.log("Added friend:", friendEmail);
+  const handleAddFriend = async (email) => {
     setIsMenuOpen(false);
+    setEmail('');
+    
+    try {
+      const response = await fetch('http://localhost:4000/api/friends/add-friend', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, email }), // Sending the friend's email as part of the request
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to add friend');
+      }
+  
+      const data = await response.json();
+      console.log('Friend added:', data);
+      // You can handle the success case here (e.g., show a success message)
+    } catch (error) {
+      console.error('Error adding friend:', error);
+      // Optionally, handle the error case here (e.g., show an error message)
+    }
   };
+
+
+
 
   const handleLogout = () => {
     // Clear authentication data
@@ -50,8 +101,8 @@ const Navbar = () => {
         <li><Link href="/dashboard">Dashboard</Link></li>
         <li><Link href="/lessons">Lessons and Quizzes</Link></li>
         <li className="relative">
-          <button className="text-gray-700" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            Add Friend
+          <button className="flex space-x-6 text-gray-700" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            Friends
           </button>
           {isMenuOpen && (
             <div className="absolute left-1/2 transform -translate-x-1/2 mt-3 w-72 bg-white shadow-lg rounded-lg p-4 z-10 text-center border border-black">
@@ -62,13 +113,12 @@ const Navbar = () => {
                 placeholder="Search email"
                 className="w-full p-2 border border-black rounded-lg mb-3 text-center placeholder-black"
               />
-              {searchResults.length > 0 ? (
-                <ul className="border border-black rounded-lg overflow-hidden">
-                  {searchResults.map((user) => (
+              {friends.length > 0 ? (
+                <ul className="border rounded-lg overflow-hidden">
+                  {friends.map((user) => (
                     <li
                       key={user.id}
-                      className="cursor-pointer p-2 hover:bg-gray-100 border-b"
-                      onClick={() => handleAddFriend(user.email)}
+                      className="p-2 hover:bg-gray-100 border-b"
                     >
                       {user.email}
                     </li>
