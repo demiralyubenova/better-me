@@ -9,10 +9,20 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [friends, setFriends] = useState([]);
-  const token = localStorage.getItem('token');
-  const userId = jwtDecode(token).sub;
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        const user = jwtDecode(token).sub;
+        setUserId(user);
+      }
+    }
+  }, []);
 
   useEffect(() => {
+    if (!userId) return; 
     const fetchFriends = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/friends/get-friends', {
@@ -58,21 +68,13 @@ const Navbar = () => {
   
       const data = await response.json();
       console.log('Friend added:', data);
-      // You can handle the success case here (e.g., show a success message)
     } catch (error) {
       console.error('Error adding friend:', error);
-      // Optionally, handle the error case here (e.g., show an error message)
     }
   };
 
-
-
-
   const handleLogout = () => {
-    // Clear authentication data
-    localStorage.removeItem("token"); // If using localStorage
-
-
+    localStorage.removeItem("token");
     window.location.href = "/";
   };
 
@@ -96,6 +98,7 @@ const Navbar = () => {
         )}
       </div>
 
+        {userId ? (
       <ul className="flex space-x-6 text-gray-700">
         <li><Link href="/">Beginning</Link></li>
         <li><Link href="/dashboard">Dashboard</Link></li>
@@ -146,6 +149,15 @@ const Navbar = () => {
           </button>
         </li>
       </ul>
+      ) : 
+      (
+        <ul className="flex space-x-6 text-gray-700">
+          <li><Link href="/login">Login</Link></li>
+          <li><Link href="/signup">Sign Up</Link></li>
+        </ul>
+      )
+      }
+
     </nav>
   );
 };

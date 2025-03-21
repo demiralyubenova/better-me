@@ -24,7 +24,7 @@ cron.schedule('*/1 * * * *', async () => {
 //   }
 
 //   users.forEach(user => {
-    sendEmail();
+   // sendEmail();
 //   });
 });
 
