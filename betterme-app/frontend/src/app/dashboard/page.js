@@ -186,7 +186,7 @@ export default function Dashboard() {
       </div>
 
       <div className="bg-white p-4 rounded-lg shadow mb-6">
-  <h2 className="text-blue-500 font-semibold mb-3">Месечен Преглед</h2>
+  <h2 className="text-black-500 font-semibold mb-3">Месечен Преглед</h2>
   <ResponsiveContainer width="100%" height={300}>
     <PieChart>
       <Pie
