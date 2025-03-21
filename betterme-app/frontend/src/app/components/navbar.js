@@ -95,24 +95,28 @@ const Navbar = () => {
       <div className="text-2xl font-bold text-green-600"><Link href="/">BetterMe</Link></div>
       
  {/* Search Bar */}
- <div className="relative">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearch}
-          placeholder="Search lessons..."
-          className="p-2 border border-black text-black rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-gray-600 placeholder-gray-500"
-        />
-        {searchQuery && searchResults.length > 0 && (
-          <div className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-lg p-2 border border-black">
-            {searchResults.map((lesson) => (
-              <Link key={lesson.id} href={`/lessons/${lesson.id}`} className="block p-2 hover:bg-gray-100">
-                {lesson.title}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
+<div className="relative">
+  <input
+    type="text"
+    value={searchQuery}
+    onChange={handleSearch}
+    placeholder="Search lessons..."
+    className="p-2 border border-black text-black rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-gray-600 placeholder-gray-500"
+  />
+  {searchQuery && searchResults.length > 0 && (
+    <div className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-lg p-2 border border-black">
+      {searchResults.map((lesson) => (
+        <Link
+          key={lesson.id}
+          href={`/lessons/${lesson.id}`}
+          className="block p-2 hover:bg-gray-100 text-gray-800" 
+        >
+          {lesson.title}
+        </Link>
+      ))}
+    </div>
+  )}
+</div>
         {userId ? (
       <ul className="flex space-x-6 text-gray-700">
         <li><Link href="/dashboard">Dashboard</Link></li>
