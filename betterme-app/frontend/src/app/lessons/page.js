@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import lessons from '@/data/finance_lesson.json';
+import Navbar from '../components/navbar';
 
 export default function LessonsPage() {
   // Group lessons by difficulty
@@ -15,6 +16,7 @@ export default function LessonsPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
+      <Navbar />
       <h1 className="text-4xl font-bold text-center text-green-600 mb-8">Financial Literacy Lessons</h1>
       {['Beginner', 'Intermediate', 'Advanced'].map((level) => (
         <div key={level} className="mb-12">
