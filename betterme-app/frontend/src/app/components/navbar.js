@@ -47,6 +47,7 @@ const Navbar = () => {
 
       <ul className="flex space-x-6 text-gray-700">
         <li><Link href="/">Beginning</Link></li>
+        <li><Link href="/dashboard">Dashboard</Link></li>
         <li><Link href="/lessons">Lessons and Quizzes</Link></li>
         <li className="relative">
           <button className="text-gray-700" onClick={() => setIsMenuOpen(!isMenuOpen)}>

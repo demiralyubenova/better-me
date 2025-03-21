@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Navbar from './components/navbar';
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,60 +44,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center relative">
-        <div className="text-2xl font-bold text-green-600">BetterMe</div>
-        <ul className="flex space-x-6 text-gray-700">
-          <li><Link href="/">Beginning</Link></li>
-          <li><Link href="/lessons">Lessons and Quizes</Link></li>
-          <li className="relative">
-            <button
-              className="flex space-x-6 text-gray-700"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              Add Friend
-            </button>
-            
-            {isMenuOpen && (
-              <div className="absolute left-1/2 transform -translate-x-1/2 mt-3 w-72 bg-white shadow-lg rounded-lg p-4 z-10 text-center">
-                <input
-                  type="text"
-                  value={email}
-                  onChange={handleSearch}
-                  placeholder="Търси имейл"
-                  className="w-full p-2 border rounded-lg mb-3 text-center"
-                />
-                {searchResults.length > 0 ? (
-                  <ul className="border rounded-lg overflow-hidden">
-                    {searchResults.map((user) => (
-                      <li
-                        key={user.id}
-                        className="cursor-pointer p-2 hover:bg-gray-100 border-b"
-                        onClick={() => handleAddFriend(user.email)}
-                      >
-                        {user.email}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-gray-500">Няма намерени потребители</p>
-                )}
-                <div className="mt-4">
-                  <button
-                    onClick={() => handleAddFriend(email)}
-                    className="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded-lg mt-2 w-full"
-                  >
-                    Добави приятел
-                  </button>
-                </div>
-              </div>
-            )}
-          </li>
-          <li><Link href="/todo-list">To-Do List</Link></li>
-          <li><Link href="/profile">Profile 👤</Link></li>
-        </ul>
-      </nav>
-
+      <Navbar />
       {/* Animated Hero Section */}
       <div className="max-w-5xl mx-auto px-6 py-24 text-center">
         <motion.h1
