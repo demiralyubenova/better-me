@@ -13,11 +13,8 @@ export default function HomePage() {
   
 
   useEffect(() => {
-    const shouldReload = localStorage.getItem("shouldReload");
-  
-    if (shouldReload === "true") {
+    if (localStorage.getItem("shouldReload") === "true") {
       localStorage.removeItem("shouldReload");
-      window.location.reload();
     }
   
     const setReloadFlag = () => localStorage.setItem("shouldReload", "true");

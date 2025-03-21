@@ -58,7 +58,7 @@ export default function Login() {
           </button>
         </form>
         <p className="mt-4 text-center text-gray-600">
-          Нямаш акаунт? <Link href="/signup" className="text-black-600 hover:underline">Регистрирай се</Link>
+          Нямаш акаунт? <Link href="/signup/onboarding" className="text-black-600 hover:underline">Регистрирай се</Link>
         </p>
       </div>
     </div>
