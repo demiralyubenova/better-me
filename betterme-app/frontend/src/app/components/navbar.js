@@ -101,7 +101,7 @@ const Navbar = () => {
           value={searchQuery}
           onChange={handleSearch}
           placeholder="Search lessons..."
-          className="p-2 border border-black text-black rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-gray-600 placeholder-black"
+          className="p-2 border border-black text-black rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-gray-600 placeholder-gray-500"
         />
         {searchQuery && searchResults.length > 0 && (
           <div className="absolute top-full left-0 mt-1 w-full bg-white shadow-md rounded-lg p-2 border border-black">
@@ -128,7 +128,7 @@ const Navbar = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Search email"
-                className="w-full p-2 border border-black rounded-lg mb-3 text-center placeholder-black"
+                className="w-full p-2 border border-black rounded-lg mb-3 text-center placeholder-gray"
               />
               {friends.length > 0 ? (
                 <ul className="border rounded-lg overflow-hidden">
