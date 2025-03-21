@@ -66,6 +66,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (!transactions.length) return;
 
+    // Calculate total income and total expenses
     const totalIncome = transactions
       .filter(tx => tx.type === "Income")
       .reduce((acc, tx) => acc + tx.amount, 0);
@@ -74,14 +75,22 @@ export default function Dashboard() {
       .filter(tx => tx.type === "Expense")
       .reduce((acc, tx) => acc + tx.amount, 0);
 
-    setUserData(prevData => ({
-      ...prevData,
-      income: prevData.income + totalIncome,
-      expenses: prevData.expenses + totalExpenses,
-    }));
+    // Update userData with the new balance values
+    setUserData(prevData => {
+      const newIncome = prevData.income + totalIncome;
+      const newExpenses = prevData.expenses + totalExpenses;
+
+      return {
+        income: newIncome,
+        expenses: newExpenses,
+      };
+    });
   }, [transactions]);
 
+  // Calculate balance based on updated user data
   const balance = userData.income - userData.expenses;
+
+
 
   // Calculate remaining days in the current month
   const getRemainingDays = () => {
