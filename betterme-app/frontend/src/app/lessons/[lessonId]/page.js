@@ -1,30 +1,102 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import lessons from '@/data/finance_lesson.json';
 import Navbar from '../../components/navbar';
 import Confetti from 'react-confetti';
 import { jwtDecode } from 'jwt-decode';
 
-
 export default function LessonDetailPage() {
   const params = useParams();
-  const { lessonId } = params; // очаква URL да е като /lessons/beg-1
+  const router = useRouter();
+  const { lessonId } = params;
 
   const [lesson, setLesson] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [xpEarned, setXpEarned] = useState(0);
-  // New state variables
   const [selectedOption, setSelectedOption] = useState(null);
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [completedLessons, setCompletedLessons] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Find the lesson data
     const foundLesson = lessons.lessons.find((l) => l.id === lessonId);
     setLesson(foundLesson);
+    
+    // Get user info and fetch completed lessons
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        setUserId(decodedToken.sub);
+        fetchCompletedLessons(decodedToken.sub);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        setIsLoading(false);
+      }
+    } else {
+      setIsLoading(false);
+    }
   }, [lessonId]);
+
+  // Fetch all completed lessons for the user
+  const fetchCompletedLessons = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/quiz/get-lessons?userId=${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      
+      const data = await response.json();
+      if (data.data) {
+        const completedLessonIds = data.data.map(lesson => lesson.lesson_id);
+        setCompletedLessons(completedLessonIds);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching completed lessons:", error);
+      setIsLoading(false);
+    }
+  };
+
+  // Check if current lesson is completed
+  const isCurrentLessonCompleted = completedLessons.includes(lessonId);
+
+  // Mark lesson as completed
+  const markLessonAsCompleted = async () => {
+    if (!userId || isCurrentLessonCompleted) return;
+
+    try {
+      const response = await fetch("http://localhost:4000/api/quiz/complete-lesson", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          userId, 
+          lessonId,
+          xp: lesson.completionXp || 10 // Default XP for lesson completion
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        // Add the lesson to completed lessons locally
+        setCompletedLessons([...completedLessons, lessonId]);
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 3000);
+      }
+    } catch (error) {
+      console.error("Error marking lesson as completed:", error);
+    }
+  };
 
   useEffect(() => {
     // Reset states when moving to next question
@@ -33,7 +105,8 @@ export default function LessonDetailPage() {
     setShowConfetti(false);
   }, [currentQuestion]);
 
-  if (!lesson) return <div>Loading lesson...</div>;
+  if (isLoading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  if (!lesson) return <div className="flex justify-center items-center h-screen">Lesson not found</div>;
 
   const quiz = lesson.quiz;
   const question = quiz ? quiz[currentQuestion] : null;
@@ -66,26 +139,39 @@ export default function LessonDetailPage() {
     if (currentQuestion < quiz.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          console.error("No token found");
+        if (!userId) {
+          console.error("No user ID found");
           return;
         }
 
         try {
-          const decodedToken = jwtDecode(token);
-          const userId = decodedToken.sub;
-
           fetch("http://localhost:4000/api/quiz/finishquiz", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ userId: userId, xp: xpEarned}),
+            body: JSON.stringify({ userId, xp: xpEarned }),
           })
             .then(response => response.json())
-            .catch(error => console.error("Error fetching user data:", error));
-          window.location.href = `/lessons`;
+            .then(() => {
+              // Also mark the lesson as completed when quiz is finished
+              if (!isCurrentLessonCompleted) {
+                fetch("http://localhost:4000/api/lessons/complete", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ 
+                    userId, 
+                    lessonId,
+                    xp: 0 // No additional XP since quiz already gave XP
+                  }),
+                });
+                setCompletedLessons([...completedLessons, lessonId]);
+              }
+              router.push('/lessons');
+            })
+            .catch(error => console.error("Error saving quiz results:", error));
         } catch (error) {
           console.error("Error:", error);
         }
@@ -117,7 +203,7 @@ export default function LessonDetailPage() {
     return "bg-gray-400 text-gray-700";
   };
 
-  // Намиране на текущия урок в списъка
+  // Find adjacent lessons
   const lessonIndex = lessons.lessons.findIndex((l) => l.id === lessonId);
   const previousLesson = lessonIndex > 0 ? lessons.lessons[lessonIndex - 1] : null;
   const nextLesson = lessonIndex < lessons.lessons.length - 1 ? lessons.lessons[lessonIndex + 1] : null;
@@ -128,8 +214,30 @@ export default function LessonDetailPage() {
       {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
 
       <div className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-20 mb-8">
+        {/* Completion Status Badge */}
+        {isCurrentLessonCompleted && (
+          <div className="mb-4 bg-green-100 text-green-800 px-3 py-1 rounded-full inline-flex items-center">
+            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            Completed
+          </div>
+        )}
+        
         <h1 className="text-3xl text-green-700 font-bold mb-6">{lesson.title}</h1>
         <p className="text-lg text-gray-700 mb-8">{lesson.content}</p>
+
+        {/* Mark as completed button */}
+        {userId && !isCurrentLessonCompleted && !quiz && (
+          <div className="my-8">
+            <button 
+              onClick={markLessonAsCompleted}
+              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-300"
+            >
+              Mark as Completed (+{lesson.completionXp || 10} XP)
+            </button>
+          </div>
+        )}
 
         <hr className="my-8" />
         {quiz && (
@@ -199,7 +307,7 @@ export default function LessonDetailPage() {
           </>
         )}
 
-        {/* Навигационни бутони */}
+        {/* Navigation buttons */}
         <div className="mt-8 flex justify-between">
           {previousLesson && (
             <Link href={`/lessons/${previousLesson.id}`}>
