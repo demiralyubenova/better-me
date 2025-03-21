@@ -33,7 +33,7 @@ textarea {
 }
 
 /* За да изглеждат добре бутоните */
-button {
+.add-todo-button {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;
@@ -45,7 +45,7 @@ button {
 }
 
 /* Малки размери за бутоните при интеракция */
-button:hover {
+.add-todo-button:hover {
   background-color: #45a049;
 }
 
@@ -109,7 +109,7 @@ textarea#editText {
   gap: 10px;
 }
 
-button.mark-as-completed,
+.add-todo-button.mark-as-completed,
 button.delete {
   font-size: 14px;
   padding: 6px 12px;
@@ -127,6 +127,7 @@ button.mark-as-completed:hover {
 
 button.delete {
   background-color: #e16a76;
+  color: white;
 }
 
 button.delete:hover {
@@ -134,14 +135,14 @@ button.delete:hover {
 }
 
 /* Подобрени бутоните с малки размери */
-button.mark-as-completed,
+.add-todo-button.mark-as-completed,
 button.delete {
   font-size: 14px; /* Намален размер на текста */
   padding: 6px 12px; /* Намалена ширина на бутоните */
   border-radius: 6px;
 }
 
-button.mark-as-completed:hover {
+.add-todo-button.mark-as-completed:hover {
   background-color: #5cc47b;
 }
 
@@ -164,11 +165,18 @@ button:focus {
   outline: none;
 }
 
-button.edit {
+button.add-todo-button-edit {
   background-color: #74c667;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-button.edit:hover {
+button.add-todo-button-edit:hover {
   background-color: #42a74e;
 }
 
