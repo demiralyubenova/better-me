@@ -125,6 +125,7 @@ export default function LessonDetailPage() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
+      <br></br>
       {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
 
       <div className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-20 mb-8">
@@ -203,7 +204,7 @@ export default function LessonDetailPage() {
         <div className="mt-8 flex justify-between">
           {previousLesson && (
             <Link href={`/lessons/${previousLesson.id}`}>
-              <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700">
+              <button className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-700">
                 Previous Lesson
               </button>
             </Link>
@@ -211,7 +212,7 @@ export default function LessonDetailPage() {
 
           {nextLesson ? (
             <Link href={`/lessons/${nextLesson.id}`}>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+              <button className="bg-green-700 text-white px-4 py-2 rounded hover:bg-blue-700">
                 Next Lesson
               </button>
             </Link>

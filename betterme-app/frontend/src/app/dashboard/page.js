@@ -103,7 +103,8 @@ export default function Dashboard() {
 
   const remainingBudget = userData.income - userData.expenses;
   const remainingDays = getRemainingDays();
-  const dailySpendingLimit = remainingBudget / remainingDays;
+  const dailySpendingLimit = Math.floor(remainingBudget / remainingDays);
+
 
   const chartData = [
     {
