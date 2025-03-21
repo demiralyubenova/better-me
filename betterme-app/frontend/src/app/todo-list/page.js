@@ -59,15 +59,18 @@ function App() {
       <br></br>
       <br></br>
       <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <h1>To-Do List</h1>
-      <div className="flex gap-2 align-center justify-center">
+      <div className="flex gap-2 align-center justify-center h-18">
       <textarea
         placeholder="Enter a new todo"
         value={newToDoName}
         onChange={e => setNewToDoName(e.target.value)}
       />
       <input
-      className="border p-2 rounded bg-gray-600 w-1/2 h-10"
+      className="border p-2 rounded bg-gray-600 w-1/2 h-12 "
         type="date"
         value={newToDoDate}
         onChange={e => setNewToDoDate(e.target.value)}
