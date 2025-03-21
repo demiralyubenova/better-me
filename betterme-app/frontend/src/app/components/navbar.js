@@ -1,19 +1,49 @@
 import { useState } from "react";
 import Link from "next/link";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [friends, setFriends] = useState([]);
+
 
   const handleSearch = (e) => {
     setEmail(e.target.value);
     // Add logic for searching friends here
   };
 
-  const handleAddFriend = (friendEmail) => {
-    console.log("Added friend:", friendEmail);
-    setIsMenuOpen(false);
+  const handleAddFriend = async (email) => {
+    // First, update the state locally
+    setFriends([...friends, email]);
+    setIsMenuOpen(false); // Close the menu after adding
+    setEmail(''); // Clear the search input
+    
+    const token = localStorage.getItem('token');
+    const userId = jwtDecode(token);
+    console.log(userId)
+    // Now, send a POST request to the backend to add the friend
+    try {
+      const response = await fetch('http://localhost:4000/api/friends/add-friend', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }), // Sending the friend's email as part of the request
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to add friend');
+      }
+  
+      const data = await response.json();
+      console.log('Friend added:', data);
+      // You can handle the success case here (e.g., show a success message)
+    } catch (error) {
+      console.error('Error adding friend:', error);
+      // Optionally, handle the error case here (e.g., show an error message)
+    }
   };
 
   const handleLogout = () => {

@@ -35,11 +35,35 @@ export default function HomePage() {
     );
   };
 
-  const handleAddFriend = (email) => {
+  const handleAddFriend = async (email) => {
+    // First, update the state locally
     setFriends([...friends, email]);
-    setIsMenuOpen(false); // Затваряне на менюто след добавяне
-    setEmail(''); // Изчистване на полето за търсене
+    setIsMenuOpen(false); // Close the menu after adding
+    setEmail(''); // Clear the search input
+  
+    // Now, send a POST request to the backend to add the friend
+    try {
+      const response = await fetch('http://localhost:4000/friend/add-friend', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }), // Sending the friend's email as part of the request
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to add friend');
+      }
+  
+      const data = await response.json();
+      console.log('Friend added:', data);
+      // You can handle the success case here (e.g., show a success message)
+    } catch (error) {
+      console.error('Error adding friend:', error);
+      // Optionally, handle the error case here (e.g., show an error message)
+    }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-50">
