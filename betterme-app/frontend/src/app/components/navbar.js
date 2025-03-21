@@ -24,7 +24,7 @@ const Navbar = () => {
     document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // If using cookies
 
     // Redirect to login page
-    window.location.href = "/login";
+    window.location.href = "/signup/onboarding";
   };
 
   return (
