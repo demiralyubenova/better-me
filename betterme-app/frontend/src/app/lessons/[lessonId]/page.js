@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import lessons from '@/data/finance_lesson.json';
+import Navbar from '../../components/navbar';
 
 export default function LessonDetailPage() {
   // Get the lessonId from URL parameters
@@ -42,34 +43,39 @@ export default function LessonDetailPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-3xl text-green-700 font-bold mb-4">{lesson.title}</h1>
-      <p className="mb-8">{lesson.content}</p>
+    <div className="bg-gray-50 min-h-screen">
+      <Navbar />
 
-      <hr className="my-8" />
+      <div className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-16 mb-8">
+        <h1 className="text-3xl text-green-700 font-bold mb-6">{lesson.title}</h1>
+        <p className="text-lg text-gray-700 mb-8">{lesson.content}</p>
 
-      <h2 className="text-2xl font-semibold mb-4">Quiz</h2>
-      {currentQuestion < quiz.length ? (
-        <div className="mb-6">
-          <p className="mb-4 text-lg">{question.question}</p>
-          <ul className="space-y-2">
-            {question.options.map((option, index) => (
-              <li key={index}>
-                <button
-                  className="w-full border p-3 rounded hover:bg-green-600 transition"
-                  onClick={() => handleAnswer(option)}
-                >
-                  {option}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <div className="text-xl font-semibold">
-          You have completed the quiz! Total XP earned: {xpEarned}
-        </div>
-      )}
+        <hr className="my-8" />
+
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Quiz</h2>
+        
+        {currentQuestion < quiz.length ? (
+          <div className="space-y-6">
+            <p className="text-xl text-gray-800">{question.question}</p>
+            <ul className="space-y-4">
+              {question.options.map((option, index) => (
+                <li key={index}>
+                  <button
+                    className="w-full py-3 px-5 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 focus:outline-none transition duration-300"
+                    onClick={() => handleAnswer(option)}
+                  >
+                    {option}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="text-xl font-semibold text-gray-800">
+            You have completed the quiz! Total XP earned: {xpEarned}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
