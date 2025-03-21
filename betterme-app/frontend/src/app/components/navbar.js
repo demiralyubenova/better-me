@@ -19,12 +19,10 @@ const Navbar = () => {
 
   const handleLogout = () => {
     // Clear authentication data
-    localStorage.removeItem("authToken"); // If using localStorage
-    sessionStorage.removeItem("authToken"); // If using sessionStorage
-    document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // If using cookies
+    localStorage.removeItem("token"); // If using localStorage
 
-    // Redirect to login page
-    window.location.href = "/signup/onboarding";
+
+    window.location.href = "/";
   };
 
   return (
