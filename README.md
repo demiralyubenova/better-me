@@ -1,36 +1,13 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Идея на приложението-BETTER ME
+Представяме ви нашия сайт-BETTER ME.
+Преди да започнем първо трябва да си поставим въпроса какво е финансова грамотност?
+Това е когато знаем как да управляваме ресурсите,с които разполагаме,а именно парите,да не се оставяме от невежество те да управляват нас.
+Това е доста често срещан проблем при младото поколение,затова чрез този проект ние предлагаме следните решения.
 
-## Getting Started
+Първоначално при регистрация се пита на колко години,от кой град си,а също и за собствените ти приходи и разходи. След като се регистрираш чрез имейл и си препратен към страница,в която имаш lessons-кратки лекции,съпътствани от quiz-oве,които можеш да решиш,за да видиш какво си научил.
+Те са подредени в три level-a beginner, intermediate, advanced. 
 
-First, run the development server:
+Имаш и dashboard,в който ако въвеждаш приходите си и разходите си всеки ден,а и резултатите от quiz-овете,ще ти излезе месечна статистика,която ще можеш да сравниш с хора,които си добавил с другата функционалност,която сайта предлага-add friend чрез имейл и в зависимост от резултатите да се мотивираме да сме по-добра версия на себе си.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Друга наша функционалност е to do list-a,чрез който можеш да разпределиш ангажиментите си по дни,като можеш да ги триеш като ги приключиш,редактираш или изтриваш,ако са отпаднали.
+С това можем да включим два от поставените проблеми-финансите и ценността на времето,което както хората казват е най-голямото богатство.
