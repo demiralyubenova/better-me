@@ -120,6 +120,8 @@ export default function LessonsPage() {
   return (
     <div className="w-full bg-gray-50 min-h-screen">
       <Navbar />
+      <br></br>
+      <br></br>
       <div className="pt-20">
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-black mb-2">Financial Literacy Lessons</h1>
