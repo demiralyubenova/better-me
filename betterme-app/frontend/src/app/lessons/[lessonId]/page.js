@@ -44,7 +44,6 @@ export default function LessonDetailPage() {
     }
   }, [lessonId]);
 
-  // Fetch all completed lessons for the user
   const fetchCompletedLessons = async (userId) => {
     try {
       const response = await fetch(`http://localhost:4000/api/quiz/get-lessons?userId=${userId}`, {
@@ -66,10 +65,8 @@ export default function LessonDetailPage() {
     }
   };
 
-  // Check if current lesson is completed
   const isCurrentLessonCompleted = completedLessons.includes(lessonId);
 
-  // Mark lesson as completed
   const markLessonAsCompleted = async () => {
     if (!userId || isCurrentLessonCompleted) return;
 
@@ -98,7 +95,6 @@ export default function LessonDetailPage() {
   };
 
   useEffect(() => {
-    // Reset states when moving to next question
     setSelectedOption(null);
     setAnswerSubmitted(false);
     setShowConfetti(false);
@@ -129,7 +125,6 @@ export default function LessonDetailPage() {
     
     if (isCorrect) {
       setShowConfetti(true);
-      // Hide confetti after 3 seconds
       setTimeout(() => setShowConfetti(false), 3000);
     }
   };
@@ -153,7 +148,6 @@ export default function LessonDetailPage() {
           })
             .then(response => response.json())
             .then(() => {
-              // Also mark the lesson as completed when quiz is finished
               if (!isCurrentLessonCompleted) {
                 fetch("http://localhost:4000/api/lessons/complete", {
                   method: "POST",
@@ -163,7 +157,7 @@ export default function LessonDetailPage() {
                   body: JSON.stringify({ 
                     userId, 
                     lessonId,
-                    xp: 0 // No additional XP since quiz already gave XP
+                    xp: 0 
                   }),
                 });
                 setCompletedLessons([...completedLessons, lessonId]);
@@ -183,7 +177,6 @@ export default function LessonDetailPage() {
     }
   };
 
-  // Get button style based on answer status
   const getButtonStyle = (option) => {
     if (!answerSubmitted) {
       return option === selectedOption 
@@ -202,7 +195,6 @@ export default function LessonDetailPage() {
     return "bg-gray-400 text-gray-700";
   };
 
-  // Find adjacent lessons
   const lessonIndex = lessons.lessons.findIndex((l) => l.id === lessonId);
   const previousLesson = lessonIndex > 0 ? lessons.lessons[lessonIndex - 1] : null;
   const nextLesson = lessonIndex < lessons.lessons.length - 1 ? lessons.lessons[lessonIndex + 1] : null;
@@ -214,7 +206,6 @@ export default function LessonDetailPage() {
       {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
 
       <div className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-20 mb-8">
-        {/* Completion Status Badge */}
         {isCurrentLessonCompleted && (
           <div className="mb-4 bg-green-100 text-green-800 px-3 py-1 rounded-full inline-flex items-center">
             <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -227,7 +218,6 @@ export default function LessonDetailPage() {
         <h1 className="text-3xl text-green-700 font-bold mb-6">{lesson.title}</h1>
         <p className="text-lg text-gray-700 mb-8">{lesson.content}</p>
 
-        {/* Mark as completed button */}
         {userId && !isCurrentLessonCompleted && !quiz && (
           <div className="my-8">
             <button 
@@ -307,7 +297,6 @@ export default function LessonDetailPage() {
           </>
         )}
 
-        {/* Navigation buttons */}
         <div className="mt-8 flex justify-between">
           {previousLesson && (
             <Link href={`/lessons/${previousLesson.id}`}>

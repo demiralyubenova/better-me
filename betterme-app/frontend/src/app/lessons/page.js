@@ -17,7 +17,6 @@ export default function LessonsPage() {
   });
   
   useEffect(() => {
-    // Get user info and fetch completed lessons
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -33,7 +32,6 @@ export default function LessonsPage() {
     }
   }, []);
   
-  // Load saved category preference
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedCategory = localStorage.getItem('activeLessonCategory');
@@ -56,8 +54,6 @@ export default function LessonsPage() {
       if (data.data) {
         const completedLessonIds = data.data.map(lesson => lesson.lesson_id);
         setCompletedLessons(completedLessonIds);
-        
-        // Calculate progress for each category
         calculateProgress(completedLessonIds);
       }
       setIsLoading(false);
@@ -67,7 +63,6 @@ export default function LessonsPage() {
     }
   };
   
-  // Calculate completion progress for each category
   const calculateProgress = (completedIds) => {
     const lessons = Array.isArray(lessonsData) ? lessonsData : (lessonsData.lessons || []);
     
@@ -89,17 +84,14 @@ export default function LessonsPage() {
     setProgress(newProgress);
   };
 
-  // Save category preference
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('activeLessonCategory', activeCategory);
     }
   }, [activeCategory]);
 
-  // Get lessons data
   const lessons = Array.isArray(lessonsData) ? lessonsData : (lessonsData.lessons || []);
 
-  // Group lessons by difficulty
   const categories = {
     beginner: lessons.filter(lesson => lesson.difficulty?.toLowerCase().includes('beginner')),
     intermediate: lessons.filter(lesson => lesson.difficulty?.toLowerCase().includes('intermediate')),
@@ -121,7 +113,6 @@ export default function LessonsPage() {
     advanced: { bg: 'bg-red-500', text: 'text-red-600', border: 'border-red-300', hover: 'hover:bg-red-100', completed: 'bg-red-200' }
   };
 
-  // Check if lesson is completed
   const isLessonCompleted = (lessonId) => {
     return completedLessons.includes(lessonId);
   };
@@ -134,7 +125,6 @@ export default function LessonsPage() {
           <h1 className="text-4xl font-bold text-black mb-2">Financial Literacy Lessons</h1>
           <p className="text-black max-w-2xl mx-auto">Select a difficulty level to explore lessons designed to improve your financial knowledge</p>
           
-          {/* Overall progress display */}
           {userId && (
             <div className="mt-4 flex flex-col items-center">
               <div className="text-sm font-medium text-gray-600 mb-1">
@@ -150,7 +140,6 @@ export default function LessonsPage() {
           )}
         </div>
         
-        {/* Category selection tabs */}
         <div className="flex justify-center mb-8">
           {Object.keys(categories).map((category) => (
             <button
@@ -166,7 +155,6 @@ export default function LessonsPage() {
                 {categories[category].length}
               </span>
               
-              {/* Progress indicator for each tab */}
               {userId && progress[category].total > 0 && (
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200">
                   <div 
@@ -179,7 +167,6 @@ export default function LessonsPage() {
           ))}
         </div>
         
-        {/* Active category content */}
         <div className={`max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-10 border-t-4 
           ${categoryColors[activeCategory].border}`}>
           
@@ -189,7 +176,6 @@ export default function LessonsPage() {
               {getCategoryTitle(activeCategory)} Level Lessons
             </h2>
             
-            {/* Category progress */}
             {userId && progress[activeCategory].total > 0 && (
               <div className="flex items-center">
                 <span className="text-sm font-medium text-gray-600 mr-3">
@@ -238,7 +224,6 @@ export default function LessonsPage() {
                         <div className="flex items-center mb-2">
                           <h3 className="text-xl font-semibold text-black">{lesson.title}</h3>
                           
-                          {/* Completed badge */}
                           {completed && (
                             <span className="ml-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full flex items-center">
                               <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

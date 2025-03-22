@@ -21,7 +21,7 @@ export default function SignUp() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setError(null); // Reset errors
+    setError(null); 
 
     try {
       const response = await fetch('http://localhost:4000/api/auth/signup', {

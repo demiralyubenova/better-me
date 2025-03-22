@@ -36,7 +36,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <Navbar />
       <br></br>
       <br></br>
@@ -44,7 +43,6 @@ export default function HomePage() {
       <br></br>
       <br></br>
 
-      {/* Animated Hero Section */}
       <div className="max-w-5xl mx-auto px-6 py-24 text-center">
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
@@ -60,7 +58,7 @@ export default function HomePage() {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-xl text-gray-600 mb-10"
         >
-          Interactive lessons, an AI advisor, and productivity tools tailored just for you.
+          Interactive lessons and productivity tools tailored just for you.
         </motion.p>
         <motion.div
           initial={{ scale: 0 }}
@@ -75,7 +73,6 @@ export default function HomePage() {
         </motion.div>
       </div>
 
-      {/* Features Section */}
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-xl text-gray-800 font-semibold mb-2">📚 Learn About Finances</h3>
@@ -88,8 +85,8 @@ export default function HomePage() {
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl text-gray-800 font-semibold mb-2">🤖 AI Assistant</h3>
-          <p className="text-gray-600">Get personalized recommendations, financial literacy tips, productivity advice, and answers to your questions from our AI advisor.</p>
+          <h3 className="text-xl text-gray-800 font-semibold mb-2">👫 Connect with your friends</h3>
+          <p className="text-gray-600">Learn to manage your finances and time while competing with your friends to see who is more responsible.</p>
         </div>
       </div>
     </div>

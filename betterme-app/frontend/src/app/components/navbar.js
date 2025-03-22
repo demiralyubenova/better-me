@@ -32,7 +32,7 @@ const Navbar = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userId }), // Sending the friend's email as part of the request
+          body: JSON.stringify({ userId }), 
         });
         if (response.ok) {
           const data = await response.json();
@@ -50,7 +50,6 @@ const Navbar = () => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
 
-    // Filter lessons by title
     if (query.length > 0) {
       const filteredLessons = lessons.lessons.filter((lesson) =>
         lesson.title.toLowerCase().includes(query)
@@ -71,7 +70,7 @@ const Navbar = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId, email }), // Sending the friend's email as part of the request
+        body: JSON.stringify({ userId, email }), 
       });
   
       if (!response.ok) {
@@ -93,7 +92,6 @@ const Navbar = () => {
     <nav className="bg-white shadow-md w-full px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-10">
       <div className="text-2xl font-bold text-green-600"><Link href="/">BetterMe</Link></div>
       
- {/* Search Bar */}
 <div className="relative">
   <input
     type="text"
