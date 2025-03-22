@@ -52,7 +52,7 @@ export default function HomePage() {
           transition={{ duration: 0.8 }}
           className="text-5xl font-extrabold text-gray-800 mb-6"
         >
-          Овладей финансите и времето си днес!
+          Master your finances and time today!
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
@@ -60,7 +60,7 @@ export default function HomePage() {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-xl text-gray-600 mb-10"
         >
-          Интерактивни уроци, AI съветник и инструменти за продуктивност, специално за теб.
+          Interactive lessons, an AI advisor, and productivity tools tailored just for you.
         </motion.p>
         <motion.div
           initial={{ scale: 0 }}
@@ -69,7 +69,7 @@ export default function HomePage() {
         >
           <Link href="/signup/onboarding">
             <button className="bg-green-600 hover:bg-green-700 text-white py-3 px-8 rounded-full text-lg font-semibold shadow-lg">
-              Започни сега
+              Start now
             </button>
           </Link>
         </motion.div>
@@ -78,18 +78,18 @@ export default function HomePage() {
       {/* Features Section */}
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl text-gray-800 font-semibold mb-2">📚 Научи за финансите</h3>
-          <p className="text-gray-600">Учи чрез практически уроци за бюджетиране, спестяване, инвестиции, как да избегнеш дългове и да управляваш парите си уверено.</p>
+          <h3 className="text-xl text-gray-800 font-semibold mb-2">📚 Learn About Finances</h3>
+          <p className="text-gray-600">Study through practical lessons on budgeting, saving, investing, avoiding debt, and managing your money with confidence.</p>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl text-gray-800 font-semibold mb-2">⏰ Управлявай времето си</h3>
-          <p className="text-gray-600">Усвои умения за управление на времето чрез календара за задачи, техниката Pomodoro и ефективни стратегии за продуктивност.</p>
+          <h3 className="text-xl text-gray-800 font-semibold mb-2">⏰ Manage Your Time </h3>
+          <p className="text-gray-600">Master time management skills with a task calendar, the Pomodoro technique, and effective productivity strategies.</p>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl text-gray-800 font-semibold mb-2">🤖 AI Помощник</h3>
-          <p className="text-gray-600">Получавай персонализирани препоръки, съвети за финансова грамотност и продуктивност, и отговори на въпроси от нашия AI съветник.</p>
+          <h3 className="text-xl text-gray-800 font-semibold mb-2">🤖 AI Assistant</h3>
+          <p className="text-gray-600">Get personalized recommendations, financial literacy tips, productivity advice, and answers to your questions from our AI advisor.</p>
         </div>
       </div>
     </div>

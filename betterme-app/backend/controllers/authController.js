@@ -36,3 +36,12 @@ exports.login = async (req, res) => {
   if (error) return res.status(400).json({ error: error.message });
   res.json({ data });
 };
+
+exports.profile = async (req, res) => {
+  const { userId } = req.body;
+  console.log(userId)
+  const { data, error } = await supabase.from('user_basic_info').select('*').eq('user_id', userId);
+
+  if (error) return res.status(400).json({ error: error.message });
+  res.json({ data });
+}

@@ -8,7 +8,7 @@ exports.getFriends = async (req, res) => {
 
     if (error || !friends.length) return res.status(404).json({ message: "No friends found" });
 
-    // Намери данните на всички приятели
+ 
     const friendIds = friends.map(f => f.friend_id);
     // Get user data from auth.users table
     const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
@@ -68,3 +68,4 @@ exports.compareIncome = async (req, res) => {
 
     res.json(result);
 };
+

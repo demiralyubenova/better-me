@@ -37,7 +37,7 @@ export default function SignUp() {
 
       localStorage.removeItem('token');
       localStorage.setItem("token", data.data.session.access_token)
-      router.push('/dashboard'); // Redirect on success
+      router.push('/dashboard'); 
     } catch (err) {
       setError(err.message);
     }
@@ -46,12 +46,12 @@ export default function SignUp() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white p-8 shadow-xl rounded-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-green-600 text-center mb-6">Регистрация в BetterMe</h2>
+        <h2 className="text-2xl font-bold text-green-600 text-center mb-6">Sign up in "BetterMe"</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="space-y-4" onSubmit={handleSignup}>
           <input
             type="email"
-            placeholder="Имейл"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-3 text-gray-600 border rounded-md"
@@ -59,7 +59,7 @@ export default function SignUp() {
           />
           <input
             type="password"
-            placeholder="Парола"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-3 text-gray-600 border rounded-md"
@@ -69,11 +69,11 @@ export default function SignUp() {
             type="submit"
             className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-md font-semibold"
           >
-            Регистрирай се
+            Sign up
           </button>
         </form>
         <p className="mt-4 text-center text-gray-600">
-          Имаш акаунт? <Link href="/login" className="text-black-600 hover:underline hover:font-bold">Влез тук</Link>
+          Have an account? <Link href="/login" className="text-black-600 hover:underline hover:font-bold">Log in</Link>
         </p>
       </div>
     </div>
