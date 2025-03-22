@@ -118,7 +118,7 @@ export default function Dashboard() {
     }
   };
 
-  // New function to fetch friends data
+
   const fetchFriendsData = async (userId) => {
     try {
       const response = await fetch("http://localhost:4000/api/dashboard/getFriendsAnalytics", {

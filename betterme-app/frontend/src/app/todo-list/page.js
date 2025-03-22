@@ -66,7 +66,7 @@ function App() {
         onChange={e => setNewToDoName(e.target.value)}
       />
       <input
-      className="border p-2 rounded bg-gray-600 w-1/2 h-12 "
+      className="border p-2 rounded bg-gray-600 w-1/2 h-12  "
         type="date"
         value={newToDoDate}
         onChange={e => setNewToDoDate(e.target.value)}
