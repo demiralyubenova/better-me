@@ -176,24 +176,21 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!transactions.length) return;
-
+  
     const totalIncome = transactions
       .filter(tx => tx.type === "Income")
       .reduce((acc, tx) => acc + tx.amount, 0);
-
+  
     const totalExpenses = transactions
       .filter(tx => tx.type === "Expense")
       .reduce((acc, tx) => acc + tx.amount, 0);
-
-    setUserData(prevData => {
-      const newIncome = prevData.income + totalIncome;
-      const newExpenses = prevData.expenses + totalExpenses;
-      return {
-        income: newIncome,
-        expenses: newExpenses,
-      };
+  
+    setUserData({
+      income: totalIncome,  // ✅ Instead of adding, just set it to total
+      expenses: totalExpenses,  // ✅ Instead of adding, just set it to total
     });
   }, [transactions]);
+  
 
   useEffect(() => {
     if (friends.length > 0 && userId) {
@@ -236,23 +233,21 @@ export default function Dashboard() {
 
   const addTransaction = async () => {
     if (!newTransaction.category || !newTransaction.amount) return;
-
+  
     const token = localStorage.getItem("token");
     if (!token) {
       console.error("No token found");
       return;
     }
-
+  
     try {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.sub;
-      const amount = parseFloat(newTransaction.amount);
-
+      const amount = parseFloat(newTransaction.amount);  // Ensure it's a number
+  
       const response = await fetch("http://localhost:4000/api/dashboard/addTransaction", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_id: userId,
           category: newTransaction.category,
@@ -260,18 +255,19 @@ export default function Dashboard() {
           amount: amount,
         }),
       });
-
+  
       const data = await response.json();
       if (response.ok) {
-        setTransactions(prev => [
-          ...prev,
-          { category: newTransaction.category, type: newTransaction.type, amount, created_at: new Date() },
-        ]);
-        setNewTransaction({ category: "", type: "Income", amount: "" });
-        
-        const newIncome = newTransaction.type === "Income" ? userData.income + amount : userData.income;
-        const newExpenses = newTransaction.type === "Expense" ? userData.expenses + amount : userData.expenses;
-        setUserData({ income: newIncome, expenses: newExpenses });
+        const newTx = {
+          category: newTransaction.category,
+          type: newTransaction.type,
+          amount,
+          created_at: new Date().toISOString(), // Ensure consistent format
+        };
+  
+        setTransactions(prev => [...prev, newTx]); // ✅ Update transactions
+  
+        setNewTransaction({ category: "", type: "Income", amount: "" }); // Reset input
       } else {
         console.error("Error adding transaction:", data.error);
       }
@@ -279,6 +275,7 @@ export default function Dashboard() {
       console.error("Error adding transaction:", error);
     }
   };
+  
 
 
   const lessonChartData = [
