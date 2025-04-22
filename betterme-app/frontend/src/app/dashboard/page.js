@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as BarTooltip, Legend } from "recharts";
 import { jwtDecode } from "jwt-decode";
 import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
 export default function Dashboard() {
   const [userData, setUserData] = useState({
@@ -238,7 +239,7 @@ export default function Dashboard() {
     if (!newTransaction.category || !newTransaction.amount) return;
 
     const token = localStorage.getItem("token");
-    if (!token) {
+    if (!token) {   
       console.error("No token found");
       return;
     }
@@ -314,11 +315,12 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
-      <div className="pt-16">
+      <br></br>      
+      <br></br>
+      <div className="flex-grow pt-16 px-6">
         <h1 className="text-3xl font-bold text-black text-center mb-6">Financial Dashboard</h1>
-
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
@@ -500,6 +502,8 @@ export default function Dashboard() {
           </>
         )}
       </div>
+      <br></br>
+     <Footer />
     </div>
   );
 }
