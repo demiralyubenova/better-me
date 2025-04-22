@@ -2,6 +2,7 @@
 import Navbar from '../components/navbar';
 import './page.css';
 import { useState } from 'react';
+import Footer from '../components/footer';
 
 function App() {
 
@@ -119,7 +120,9 @@ function App() {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
+    
   );
 }
 
