@@ -6,6 +6,7 @@ import lessons from '@/data/finance_lesson.json';
 import Navbar from '../../components/navbar';
 import Confetti from 'react-confetti';
 import { jwtDecode } from 'jwt-decode';
+import Footer from '@/app/components/footer';
 
 export default function LessonDetailPage() {
   const params = useParams();
@@ -24,11 +25,9 @@ export default function LessonDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Find the lesson data
     const foundLesson = lessons.lessons.find((l) => l.id === lessonId);
     setLesson(foundLesson);
     
-    // Get user info and fetch completed lessons
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -200,9 +199,10 @@ export default function LessonDetailPage() {
   const nextLesson = lessonIndex < lessons.lessons.length - 1 ? lessons.lessons[lessonIndex + 1] : null;
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen flex flex-col">
       <Navbar />
       <br></br>
+      <div className = "flex-grow">
       {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
 
       <div className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-20 mb-8">
@@ -321,6 +321,8 @@ export default function LessonDetailPage() {
           )}
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import lessonsData from '@/data/finance_lesson.json';
 import Navbar from '../components/navbar';
 import { jwtDecode } from 'jwt-decode';
+import Footer from '../components/footer';
 
 export default function LessonsPage() {
   const [activeCategory, setActiveCategory] = useState('beginner');
@@ -304,6 +305,7 @@ export default function LessonsPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
