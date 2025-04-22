@@ -1,24 +1,21 @@
-/* Основни стилове за приложението */
 .App {
   font-family: 'Arial', sans-serif;
   background-color: #f7fafc;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh; /* Ensures the app takes up the full height of the viewport */
+  min-height: 100vh;
   box-sizing: border-box;
 }
 
-/* Footer Styling */
 footer {
   width: 100%;
   background-color: #f1f1f1;
   padding: 1rem;
   text-align: center;
-  margin-top: auto; /* Pushes the footer to the bottom */
+  margin-top: auto; 
 }
 
-/* Header Styling */
 h1 {
   color: #333;
   margin-bottom: 20px;
@@ -27,7 +24,6 @@ h1 {
   text-align: center;
 }
 
-/* Textarea Styling */
 textarea {
   box-sizing: border-box;
   color: #333;
@@ -47,7 +43,6 @@ textarea:focus {
   border-color: #4CAF50;
 }
 
-/* Add To-Do Button */
 .add-todo-button {
   background-color: #4CAF50;
   color: white;
@@ -63,7 +58,6 @@ textarea:focus {
   background-color: #45a049;
 }
 
-/* Input Date Styling */
 input[type="date"] {
   color: black;
   border: 1px solid #ccc;
@@ -76,7 +70,6 @@ input[type="date"] {
   margin-bottom: 20px;
 }
 
-/* Контейнер за задачите */
 .todo-container {
   color: #333;
   display: flex;
@@ -89,13 +82,12 @@ input[type="date"] {
   box-sizing: border-box;
 }
 
-/* Individual To-Do Item */
 .todo {
   background-color: #fff;
   padding: 15px;
   margin: 10px 0;
   width: 100%;
-  max-width: 600px; /* Adjusted for better responsiveness */
+  max-width: 600px; 
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -111,7 +103,6 @@ input[type="date"] {
   color: #6c757d;
 }
 
-/* Действия за всяка задача (бутони за edit, delete, complete) */
 .todo-actions {
   display: flex;
   gap: 10px;
@@ -147,7 +138,6 @@ button.delete:hover {
   background-color: #c82333;
 }
 
-/* Адаптивност - по-добро изглеждане на малки екрани */
 @media (max-width: 768px) {
   .todo-container {
     padding: 0 15px;

@@ -9,6 +9,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+  const [city, setCity] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const App = () => {
       const data = await response.json();
       setUser(data.data[0]);
       setDescription(data.data[0]?.description || "");
+      setCity(data.data[0]?.location || "");
     } catch (error) {
       console.error("Error fetching profile:", error);
     }
@@ -52,12 +54,19 @@ const App = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId, description }),
+        body: JSON.stringify({ userId, description, loccation: city }),
       });
 
       if (!response.ok) {
         throw new Error("Failed to update description");
       }
+
+      setUser(prevUser => ({
+        ...prevUser,
+        description,
+        location: city,
+      }));
+
     } catch (error) {
       console.error("Error updating description:", error);
     }
@@ -73,7 +82,7 @@ const App = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-white pt-16">
       <Navbar />
-      <div className="bg-white p-6 rounded-3xl shadow-2xl w-[480px] h-[650px] border-4 border-green-500 flex flex-col items-cente">
+      <div className="bg-white p-6 rounded-3xl shadow-2xl w-[480px] h-[750px] border-4 border-green-500 flex flex-col items-cente">
         {user ? (
           <div className="flex flex-col items-center">
             <img
@@ -109,6 +118,19 @@ const App = () => {
                 ${((user.income || 0) - (user.expenses || 0)).toLocaleString()}
               </p>
             </div>
+
+            <div className="w-full bg-gray-50 p-4 rounded-xl text-center mt-4">
+              <p className="text-gray-600 text-sm">City</p>
+              {isEditing ? (
+                <input
+                  className="w-full p-2 border rounded-md text-black"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              ) : (
+                <p className="text-black text-md mt-2">{city || "No city provided."}</p>
+              )}
+              </div>
 
             <div className="w-full bg-gray-50 p-4 rounded-xl text-center mt-4">
               <p className="text-gray-600 text-sm">Description</p>
