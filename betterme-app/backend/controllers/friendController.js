@@ -10,6 +10,7 @@ exports.getFriends = async (req, res) => {
 
  
     const friendIds = friends.map(f => f.friend_id);
+    // Get user data from auth.users table
     const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
     if (authError) return res.status(500).json({ message: "Error fetching auth users" });
 

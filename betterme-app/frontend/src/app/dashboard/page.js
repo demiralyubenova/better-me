@@ -25,6 +25,7 @@ export default function Dashboard() {
   const [rankingData, setRankingData] = useState([]);
 
   useEffect(() => {
+    // Get user info and fetch completed lessons
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -32,6 +33,7 @@ export default function Dashboard() {
         const currentUserId = decodedToken.sub;
         setUserId(currentUserId);
         
+        // Fetch all required data in parallel
         Promise.all([
           fetchCompletedLessons(currentUserId),
           fetchUserFinancialData(currentUserId),
@@ -116,7 +118,7 @@ export default function Dashboard() {
     }
   };
 
-
+  // New function to fetch friends data
   const fetchFriendsData = async (userId) => {
     try {
       const response = await fetch("http://localhost:4000/api/dashboard/getFriendsAnalytics", {
@@ -138,11 +140,14 @@ export default function Dashboard() {
     }
   };
 
+  // New function to update ranking data
   const updateRankingData = (friendsData, currentUserId) => {
+    // Calculate current user's savings ratio
     const userIncome = userData.income;
     const userExpenses = userData.expenses;
     const userSavingsRatio = userIncome > 0 ? ((userIncome - userExpenses) / userIncome * 100) : 0;
     
+    // Create the ranking array with the current user and friends
     const rankings = [
       {
         name: "You",
@@ -192,6 +197,13 @@ export default function Dashboard() {
   }, [transactions]);
   
 
+  useEffect(() => {
+    if (friends.length > 0 && userId) {
+      updateRankingData(friends, userId);
+    }
+  }, [userData, friends, userId]);
+
+  // Update ranking when user data changes
   useEffect(() => {
     if (friends.length > 0 && userId) {
       updateRankingData(friends, userId);
@@ -258,16 +270,16 @@ export default function Dashboard() {
   
       const data = await response.json();
       if (response.ok) {
-        const newTx = {
-          category: newTransaction.category,
-          type: newTransaction.type,
-          amount,
-          created_at: new Date().toISOString(), // Ensure consistent format
-        };
-  
-        setTransactions(prev => [...prev, newTx]); // ✅ Update transactions
-  
-        setNewTransaction({ category: "", type: "Income", amount: "" }); // Reset input
+        setTransactions(prev => [
+          ...prev,
+          { category: newTransaction.category, type: newTransaction.type, amount, created_at: new Date() },
+        ]);
+        setNewTransaction({ category: "", type: "Income", amount: "" });
+        
+        // Update user data after adding transaction
+        const newIncome = newTransaction.type === "Income" ? userData.income + amount : userData.income;
+        const newExpenses = newTransaction.type === "Expense" ? userData.expenses + amount : userData.expenses;
+        setUserData({ income: newIncome, expenses: newExpenses });
       } else {
         console.error("Error adding transaction:", data.error);
       }
@@ -278,6 +290,8 @@ export default function Dashboard() {
   
 
 
+
+  // Lesson progress chart data
   const lessonChartData = [
     {
       name: "Completed Lessons",
@@ -289,6 +303,7 @@ export default function Dashboard() {
     },
   ];
 
+  // Find user's ranking position
   const getUserRankMessage = () => {
     const userRankIndex = rankingData.findIndex(item => item.isCurrentUser);
     
@@ -322,6 +337,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <>
+            {/* Financial Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className={`p-4 text-white rounded-lg shadow ${balance >= 0 ? "bg-green-500" : "bg-red-500"}`}>
                 <h2 className="text-lg font-semibold">Balance</h2>
@@ -363,6 +379,7 @@ export default function Dashboard() {
                 </ResponsiveContainer>
               </div>
 
+              {/* Lesson Progress Chart */}
               <div className="bg-white p-4 rounded-lg shadow">
                 <h2 className="text-gray-900 font-semibold mb-3">Learning Progress</h2>
                 <ResponsiveContainer width="100%" height={320}>
@@ -378,6 +395,7 @@ export default function Dashboard() {
               </div>
             </div>
 
+            {/* Financial Management Ranking */}
             <div className="bg-white p-4 rounded-lg shadow mb-6">
               <h2 className="text-gray-900 font-semibold mb-3">Financial Management Ranking</h2>
               <div className="text-sm text-gray-600 mb-4">
@@ -425,6 +443,7 @@ export default function Dashboard() {
               )}
             </div>
 
+            {/* Add Transaction Form */}
             <div className="bg-white p-4 rounded-lg shadow mb-6">
               <h2 className="text-black font-semibold mb-3">Add Transaction</h2>
               <div className="flex flex-col md:flex-row gap-2">
@@ -459,6 +478,7 @@ export default function Dashboard() {
               </div>
             </div>
 
+            {/* Transaction History */}
             <div className="bg-white p-4 rounded-lg shadow">
               <h2 className="text-black font-semibold mb-3">Recent Transactions</h2>
               {transactions.length > 0 ? (

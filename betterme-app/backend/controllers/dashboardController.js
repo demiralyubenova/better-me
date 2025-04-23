@@ -55,6 +55,7 @@ exports.getFriendsAnalytics = async (req, res) => {
         return res.status(400).json({ error: friendshipError.message });
       }
       
+      // If no friends, return empty array
       if (!friendships || friendships.length === 0) {
         return res.json({ friends: [] });
       }
