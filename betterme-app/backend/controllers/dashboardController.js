@@ -46,6 +46,7 @@ exports.getFriendsAnalytics = async (req, res) => {
     console.log(user_id)
   
     try {
+      // First, get the user's friend list
       const { data: friendships, error: friendshipError } = await supabase
         .from('friends')
         .select('*')
