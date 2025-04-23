@@ -59,4 +59,3 @@ exports.compareIncome = async (req, res) => {
 
     res.json(result);
 };
-

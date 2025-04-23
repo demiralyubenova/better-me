@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as BarTooltip, Legend } from "recharts";
 import { jwtDecode } from "jwt-decode";
 import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
 export default function Dashboard() {
   const [userData, setUserData] = useState({
@@ -181,21 +182,24 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!transactions.length) return;
-  
+
     const totalIncome = transactions
       .filter(tx => tx.type === "Income")
       .reduce((acc, tx) => acc + tx.amount, 0);
-  
+
     const totalExpenses = transactions
       .filter(tx => tx.type === "Expense")
       .reduce((acc, tx) => acc + tx.amount, 0);
-  
-    setUserData({
-      income: totalIncome,  // ✅ Instead of adding, just set it to total
-      expenses: totalExpenses,  // ✅ Instead of adding, just set it to total
+
+    setUserData(prevData => {
+      const newIncome = prevData.income + totalIncome;
+      const newExpenses = prevData.expenses + totalExpenses;
+      return {
+        income: newIncome,
+        expenses: newExpenses,
+      };
     });
   }, [transactions]);
-  
 
   useEffect(() => {
     if (friends.length > 0 && userId) {
@@ -245,21 +249,23 @@ export default function Dashboard() {
 
   const addTransaction = async () => {
     if (!newTransaction.category || !newTransaction.amount) return;
-  
+
     const token = localStorage.getItem("token");
-    if (!token) {
+    if (!token) {   
       console.error("No token found");
       return;
     }
-  
+
     try {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.sub;
-      const amount = parseFloat(newTransaction.amount);  // Ensure it's a number
-  
+      const amount = parseFloat(newTransaction.amount);
+
       const response = await fetch("http://localhost:4000/api/dashboard/addTransaction", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           user_id: userId,
           category: newTransaction.category,
@@ -267,7 +273,7 @@ export default function Dashboard() {
           amount: amount,
         }),
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         setTransactions(prev => [
@@ -276,7 +282,6 @@ export default function Dashboard() {
         ]);
         setNewTransaction({ category: "", type: "Income", amount: "" });
         
-        // Update user data after adding transaction
         const newIncome = newTransaction.type === "Income" ? userData.income + amount : userData.income;
         const newExpenses = newTransaction.type === "Expense" ? userData.expenses + amount : userData.expenses;
         setUserData({ income: newIncome, expenses: newExpenses });
@@ -287,7 +292,6 @@ export default function Dashboard() {
       console.error("Error adding transaction:", error);
     }
   };
-  
 
 
 
@@ -326,11 +330,12 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
-      <div className="pt-16">
+      <br></br>      
+      <br></br>
+      <div className="flex-grow pt-16 px-6">
         <h1 className="text-3xl font-bold text-black text-center mb-6">Financial Dashboard</h1>
-
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
@@ -517,6 +522,8 @@ export default function Dashboard() {
           </>
         )}
       </div>
+      <br></br>
+     <Footer />
     </div>
   );
 }

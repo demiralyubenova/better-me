@@ -1,13 +1,19 @@
-/* Основни стилове за приложението */
 .App {
   font-family: 'Arial', sans-serif;
   background-color: #f7fafc;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
+}
+
+footer {
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 1rem;
+  text-align: center;
+  margin-top: auto; 
 }
 
 h1 {
@@ -19,20 +25,24 @@ h1 {
 }
 
 textarea {
-  box-sizing: border-box; /* Това гарантира, че padding и border са включени в ширината */
+  box-sizing: border-box;
   color: #333;
   padding: 12px;
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ddd;
   margin-bottom: 20px;
-  width: 100%; /* Задаваме 100% ширина, за да се разтяга в зависимост от родителския контейнер */
-  max-width: 400px; /* Ограничаваме максималната ширина */
-  resize: none; /* Изключваме възможността за ръчно променяне на размерите */
-  transition: all 0.3s ease; /* За плавни преходи */
+  width: 100%;
+  max-width: 400px;
+  resize: none;
+  transition: all 0.3s ease;
 }
 
-/* За да изглеждат добре бутоните */
+textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
 .add-todo-button {
   background-color: #4CAF50;
   color: white;
@@ -44,33 +54,22 @@ textarea {
   transition: background-color 0.3s;
 }
 
-/* Малки размери за бутоните при интеракция */
 .add-todo-button:hover {
   background-color: #45a049;
 }
 
-/* Фокусиране на textarea */
-textarea:focus {
-  outline: none;
-  border-color: #4CAF50; /* Променяме цвета на рамката при фокус */
-}
-
-/* Форма за редактиране на задача */
-textarea#editText {
+input[type="date"] {
+  color: black;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 16px;
   width: 100%;
   max-width: 400px;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  resize: none;
-  font-size: 16px;
-  padding: 12px;
-  border-radius: 8px;
   margin-bottom: 20px;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
 }
 
-/* Контейнер за задачите */
 .todo-container {
   color: #333;
   display: flex;
@@ -87,7 +86,8 @@ textarea#editText {
   background-color: #fff;
   padding: 15px;
   margin: 10px 0;
-  width: 800px;
+  width: 100%;
+  max-width: 600px; 
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -103,76 +103,19 @@ textarea#editText {
   color: #6c757d;
 }
 
-/* Действия за всяка задача (бутони за edit, delete, complete) */
 .todo-actions {
   display: flex;
   gap: 10px;
 }
 
-.add-todo-button.mark-as-completed,
-button.delete {
-  font-size: 14px;
-  padding: 6px 12px;
-  border-radius: 6px;
-  margin: 0;
-}
-
-button.mark-as-completed {
-  background-color: #4ca66d;
-}
-
-button.mark-as-completed:hover {
-  background-color: #45a049;
-}
-
-button.delete {
-  background-color: #e16a76;
-  color: white;
-}
-
-button.delete:hover {
-  background-color: #c82333;
-}
-
-/* Подобрени бутоните с малки размери */
-.add-todo-button.mark-as-completed,
-button.delete {
-  font-size: 14px; /* Намален размер на текста */
-  padding: 6px 12px; /* Намалена ширина на бутоните */
-  border-radius: 6px;
-}
-
-.add-todo-button.mark-as-completed:hover {
-  background-color: #5cc47b;
-}
-
-button.delete:hover {
-  background-color: #c82333;
-}
-
-/* Стилове за формата за добавяне на нова задача */
-textarea#todo {
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-}
-
-/* Стилове за допълнителни подобрения */
-button:focus {
-  outline: none;
-}
-
 button.add-todo-button-edit {
   background-color: #74c667;
   color: white;
-  padding: 12px 20px;
+  padding: 10px 15px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   transition: background-color 0.3s;
 }
 
@@ -180,28 +123,46 @@ button.add-todo-button-edit:hover {
   background-color: #42a74e;
 }
 
-/* Адаптивност - по-добро изглеждане на малки екрани */
+button.delete {
+  background-color: #e16a76;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+button.delete:hover {
+  background-color: #c82333;
+}
+
 @media (max-width: 768px) {
   .todo-container {
     padding: 0 15px;
   }
 
-  textarea#todo {
-    max-width: 100%;
+  .todo {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
+  textarea,
+  input[type="date"],
   button {
     width: 100%;
   }
-}
-input[type="date"] {
-  color: black;
-  border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 4px;
-  background-color: white;
 
+  .todo-actions {
+    justify-content: flex-start;
+    gap: 5px;
+    margin-top: 10px;
+  }
 }
-.date-input {
-  margin-top: 100px; /* Разделя датата от бутона */
+
+.react-calendar .highlight {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  border-radius: 50%;
 }
